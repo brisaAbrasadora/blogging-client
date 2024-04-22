@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { User } from '../interfaces';
+import { User } from '../interfaces/entities';
 import { DeleteItemComponent } from '../delete-item/delete-item.component';
 
 @Component({
@@ -20,7 +20,8 @@ export class UserItemComponent {
     username: 'Default',
     email: 'default@blogging.com',
     password: 'my-weak-password',
-    memberSince: '01/01/1990',
+    memberSince: new Date(Date.now()).toString(),
+    updatedAt: new Date(Date.now()).toString(),
   };
 
   onItemDeleted(itemId: number) {

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, LOCALE_ID, Output } from '@angular/core';
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
-import { User } from '../interfaces';
+import { User } from '../interfaces/entities';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -21,7 +21,7 @@ export class UserFormComponent {
   }
 
   registerUser() {
-    this.newUser.memberSince = formatDate(Date.now(), 'yyyy/MM/dd', this.locale);
+    this.newUser.memberSince = new Date(Date.now()).toString();
     this.addUser.emit(this.newUser);
     this.resetUser();
   }
@@ -31,8 +31,9 @@ export class UserFormComponent {
       id: 0,
       username: '',
       email: '',
-      memberSince: '',
       password: '',
+      memberSince: new Date().toString(),
+      updatedAt: new Date().toString(),
     }
   }
 }

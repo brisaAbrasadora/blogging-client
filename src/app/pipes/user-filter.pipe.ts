@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { User } from '../interfaces';
+import { User } from '../interfaces/entities';
 
 @Pipe({
   name: 'userFilter',
