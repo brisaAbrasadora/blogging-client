@@ -14,8 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class UserFormComponent {
   newUser!: User;
 
-  @Output()
-  add = new EventEmitter<User>();
+  @Output() addUser = new EventEmitter<User>();
   
   constructor(@Inject(LOCALE_ID) private locale: string) {
     this.resetUser();
@@ -23,7 +22,7 @@ export class UserFormComponent {
 
   registerUser() {
     this.newUser.memberSince = formatDate(Date.now(), 'yyyy/MM/dd', this.locale);
-    this.add.emit(this.newUser);
+    this.addUser.emit(this.newUser);
     this.resetUser();
   }
 

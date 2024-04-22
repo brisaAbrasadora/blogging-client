@@ -18,7 +18,13 @@ export class UsersPageComponent {
   constructor(@Inject(LOCALE_ID) private locale: string) {}
 
   title: string = 'Users registered in Blogging';
-  headers = { id: 'id', username: 'Username', email: 'Email', memberSince: 'Member since' };
+  headers = {
+    id: 'id',
+    username: 'Username',
+    email: 'Email',
+    memberSince: 'Member since',
+    delete: 'Delete',
+  };
   search: string = '';
 
   users: User[] = [
@@ -30,9 +36,15 @@ export class UsersPageComponent {
     },
   ];
 
-  addUser(user: User): void {
-    user.id = Math.max(...this.users.map(u => u.id!)) + 1;
+  onAddUser(user: User): void {
+    const IS_ARRAY_EMPTY: boolean = this.users.length === 0;
+    user.id = IS_ARRAY_EMPTY 
+      ? 1
+      : Math.max(...this.users.map((u) => u.id!)) + 1;
     this.users = [...this.users, user];
   }
-  
+
+  onDeleteItem(itemId: number) {
+    this.users = this.users.filter(u => u.id !== itemId);
+  }
 }

@@ -2,3 +2,4 @@
 <td>{{ user.username }}</td>
 <td>{{ user.email }}</td>
 <td>{{ user.memberSince | date }}</td>
+<td><delete-item [itemId]="user.id!" (itemDeleted)="onItemDeleted($event)" /></td>

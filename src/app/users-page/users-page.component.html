@@ -1,4 +1,4 @@
-<user-form (add)="addUser($event)"></user-form>
+<user-form (addUser)="onAddUser($event)"></user-form>
 
 <div class="card">
   <div class="card-header bg-primary text-white">
@@ -34,11 +34,12 @@
             <th>{{ headers.username }}</th>
             <th>{{ headers.email }}</th>
             <th>{{ headers.memberSince }}</th>
+            <th>{{ headers.delete }}</th>
           </tr>
         </thead>
         <tbody>
           @for (user of users | userFilter:search; track user.id) {
-            <tr user-item [user]="user"></tr>
+            <tr user-item [user]="user" (deleteItem)="onDeleteItem($event)"></tr>
           }
         </tbody>
       </table>
