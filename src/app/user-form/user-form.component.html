@@ -1,0 +1,39 @@
+<div class="card mb-4">
+  <div class="card-header bg-success text-white">Register user</div>
+  <div class="card-body">
+    <form (ngSubmit)="registerUser()">
+      <div class="mb-3 row">
+        <label for="username" class="col-sm-2 col-form-label text-sm-end"
+          >Username</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            name="username"
+            [(ngModel)]="newUser.username"
+          />
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="email" class="col-sm-2 col-form-label text-sm-end"
+          >Email</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            [(ngModel)]="newUser.email"
+          />
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <div class="offset-sm-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

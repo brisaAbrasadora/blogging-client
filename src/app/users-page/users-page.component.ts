@@ -1,24 +1,26 @@
 import { Component, Inject, LOCALE_ID } from '@angular/core';
-import { User } from '../interfaces';
-import { FormsModule } from '@angular/forms';
 import { formatDate } from '@angular/common';
+
+import { User } from '../interfaces';
+import { UserFilterPipe } from '../pipes/user-filter.pipe';
+import { UserItemComponent } from '../user-item/user-item.component';
+import { UserFormComponent } from '../user-form/user-form.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'users-page',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, UserFilterPipe, UserItemComponent, UserFormComponent],
   templateUrl: './users-page.component.html',
   styleUrl: './users-page.component.css',
 })
 export class UsersPageComponent {
-  constructor(@Inject(LOCALE_ID) private locale: string) {
-    this.resetUser();
-  }
+  constructor(@Inject(LOCALE_ID) private locale: string) {}
 
-  title = 'Users registered in Blogging';
+  title: string = 'Users registered in Blogging';
   headers = { id: 'id', username: 'Username', email: 'Email', memberSince: 'Member since' };
+  search: string = '';
 
-  newUser!: User;
   users: User[] = [
     {
       id: 1,
@@ -28,20 +30,9 @@ export class UsersPageComponent {
     },
   ];
 
-  registerUser() {
-    this.newUser.id = Math.max(...this.users.map(u => u.id!)) + 1;
-    this.newUser.memberSince = formatDate(Date.now(), 'yyyy/MM/dd', this.locale);
-    this.users.push(this.newUser);
-    this.resetUser();
+  addUser(user: User): void {
+    user.id = Math.max(...this.users.map(u => u.id!)) + 1;
+    this.users = [...this.users, user];
   }
-
-  private resetUser() {
-    this.newUser = {
-      id: 0,
-      username: '',
-      email: '',
-      memberSince: '',
-      password: '',
-    }
-  }
+  
 }

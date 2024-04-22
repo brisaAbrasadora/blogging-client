@@ -1,73 +1,50 @@
+<user-form (add)="addUser($event)"></user-form>
+
 <div class="card">
   <div class="card-header bg-primary text-white">
     {{ title }}
   </div>
   <div class="card-block">
-    @if (users.length) {
-      <div class="table-responsive">
-        <table class="table table-striped m-0">
-          <thead>
-            <tr>
-              <th>{{ headers.id }}</th>
-              <th>{{ headers.username }}</th>
-              <th>{{ headers.email }}</th>
-              <th>{{ headers.memberSince }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (user of users; track user.id) {
-              <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.memberSince }}</td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
-    } @else {
-      <h3 class="p-4">No users found</h3>
-    }
-  </div>
-</div>
-<br>
-<div class="card mb-4">
-  <div class="card-header bg-success text-white">Register user</div>
-  <div class="card-body">
-    <form (ngSubmit)="registerUser()">
-      <div class="mb-3 row">
-        <label for="username" class="col-sm-2 col-form-label text-sm-end"
-          >Username</label
-        >
-        <div class="col-sm-10">
+    <form action="" class="form p-3">
+      <div class="row">
+        <label for="filterUsername" class="col-form-label col-sm-2 text-sm-end">
+          Filter:
+        </label>
+        <div class="col-sm-5">
           <input
             type="text"
             class="form-control"
-            name="username"
-            [(ngModel)]="newUser.username"
+            name="filterUsername"
+            id="filterUsername"
+            placeholder="Filter..."
+            [(ngModel)]="search"
           />
         </div>
-      </div>
-      <div class="mb-3 row">
-        <label for="email" class="col-sm-2 col-form-label text-sm-end"
-          >Email</label
-        >
-        <div class="col-sm-10">
-          <input
-            type="email"
-            class="form-control"
-            name="email"
-            [(ngModel)]="newUser.email"
-          />
-        </div>
-      </div>
-
-      <div class="mb-3 row">
-        <div class="offset-sm-2 col-sm-10">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+        <label for="" class="col-form-label col-sm-5">
+          Filtered by: {{ search }}
+        </label>
       </div>
     </form>
+    @if (users.length) {
+    <div class="table-responsive">
+      <table class="table table-striped m-0">
+        <thead>
+          <tr>
+            <th>{{ headers.id }}</th>
+            <th>{{ headers.username }}</th>
+            <th>{{ headers.email }}</th>
+            <th>{{ headers.memberSince }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of users | userFilter:search; track user.id) {
+            <tr user-item [user]="user"></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    } @else {
+    <h3 class="p-4">No users found</h3>
+    }
   </div>
 </div>
