@@ -9,7 +9,7 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root',
 })
 export class UsersService {
-  #usersUrl = 'http://localhost:3000/users';
+  #usersUrl = 'users';
   #http = inject(HttpClient);
 
   constructor() {}

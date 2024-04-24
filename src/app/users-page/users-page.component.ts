@@ -36,11 +36,10 @@ export class UsersPageComponent implements OnInit {
       .getUsers()
       .subscribe({
         next: (users) => {
-          console.log(users);
           this.users = users;
         },
         error: (error) => console.error(error),
-      });
+      }).add(() => console.log('Users loaded!'));
   }
 
   onAddUser(user: User): void {
