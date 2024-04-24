@@ -1,4 +1,4 @@
-<user-form (addUser)="onAddUser($event)"></user-form>
+<!-- <user-form (addUser)="onAddUser($event)"></user-form> -->
 
 <div class="card">
   <div class="card-header bg-primary text-white">
@@ -39,7 +39,7 @@
         </thead>
         <tbody>
           @for (user of users | userFilter:search; track user.id) {
-            <tr user-item [user]="user" (deleteItem)="onDeleteItem($event)"></tr>
+            <tr class="item-clickeable" user-item [user]="user" (deleteItem)="onDeleteItem($event)" (click)="goToDetails(user.id)"></tr>
           }
         </tbody>
       </table>
