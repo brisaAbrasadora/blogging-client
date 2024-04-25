@@ -1,12 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { User } from '../interfaces/entities';
 import { UserFilterPipe } from '../pipes/user-filter.pipe';
 import { UserItemComponent } from '../user-item/user-item.component';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UsersService } from '../services/users.service';
 import { Router, RouterLink } from '@angular/router';
+import { User } from '../interfaces/user.entity';
 
 @Component({
   selector: 'users-page',

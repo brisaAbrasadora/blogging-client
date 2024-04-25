@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { User } from '../interfaces/entities';
 import { UserResponse, UsersResponse } from '../interfaces/responses';
 import { Observable, map } from 'rxjs';
+import { User } from '../interfaces/user.entity';
 
 @Injectable({
   providedIn: 'root',

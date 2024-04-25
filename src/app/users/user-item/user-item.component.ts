@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { User } from '../interfaces/entities';
-import { DeleteItemComponent } from '../delete-item/delete-item.component';
+import { DeleteItemComponent } from '../../common/delete-item/delete-item.component';
+import { User } from '../interfaces/user.entity';
 
 @Component({
   selector: 'tr[user-item]',

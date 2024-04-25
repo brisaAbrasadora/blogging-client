@@ -1,4 +1,4 @@
-import { User } from "./user.entity";
+import { User } from "../../users/interfaces/user.entity";
 
 export interface Blog {
   id?: number;

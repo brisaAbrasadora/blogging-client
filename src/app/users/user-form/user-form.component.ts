@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
-import { UserRegister } from '../interfaces/entities/user.entity';
+import { UserRegister } from '../interfaces/user.entity';
 
 @Component({
   selector: 'user-form',
