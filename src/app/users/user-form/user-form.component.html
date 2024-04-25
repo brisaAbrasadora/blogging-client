@@ -37,6 +37,7 @@
             formControlName="email"
             [ngClass]="validClasses(email, 'is-valid', 'is-invalid')"
           />
+          <p>{{ email.errors | json }}</p>
           @if(email.errors?.['required']) {
           <div class="invalid-feedback">Email cannot be empty</div>
           } @if(email.errors?.['email']) {

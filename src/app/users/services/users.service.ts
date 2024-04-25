@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Signal, WritableSignal, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { UserResponse, UsersResponse } from '../interfaces/responses';
@@ -11,9 +11,14 @@ import { User } from '../interfaces/user.entity';
 export class UsersService {
   #usersUrl = 'users';
   #http = inject(HttpClient);
+  #logged: WritableSignal<boolean> = signal(false);
 
   constructor() {}
 
+  get logged(): Signal<boolean> {
+    return this.#logged.asReadonly();
+  }
+  
   getUsers(): Observable<User[]> {
     return this.#http.get<UsersResponse>(`${this.#usersUrl}`).pipe(
       map((resp) => {
