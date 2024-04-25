@@ -1,7 +1,6 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { ItemToDelete } from '../interfaces/item-to-delete.interface';
 import { UsersService } from '../../users/services/users.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'delete-item',
@@ -12,9 +11,9 @@ import { Router } from '@angular/router';
 })
 export class DeleteItemComponent {
   @Input({ required: true }) item!: ItemToDelete;
+  @Output() deleted = new EventEmitter<ItemToDelete>();
 
   #usersService: UsersService = inject(UsersService);
-  #router: Router = inject(Router);
 
   deleteItem({ id, type }: ItemToDelete) {
     console.log(this.item);
@@ -29,7 +28,7 @@ export class DeleteItemComponent {
 
   #deleteUser(id: number): void {
     this.#usersService.deleteUser(id).subscribe({
-      next: () => console.log('deleted'),
+      next: () => this.deleted.emit({deleted: true, id: id}),
       error: (error) => console.log(error.error)
     });
   }

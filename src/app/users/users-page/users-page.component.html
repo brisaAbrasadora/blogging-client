@@ -17,15 +17,16 @@
             name="filterUsername"
             id="filterUsername"
             placeholder="Filter..."
-            [(ngModel)]="search"
+            [ngModel]="search()"
+            (ngModelChange)="search.set($event)"
           />
         </div>
         <label for="" class="col-form-label col-sm-5">
-          Filtered by: {{ search }}
+          Filtered by: {{ search() }}
         </label>
       </div>
     </form>
-    @if (users.length) {
+    @if (filteredUsers().length) {
     <div class="table-responsive">
       <table class="table table-striped m-0">
         <thead>
@@ -38,7 +39,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (user of users | userFilter:search; track user.id) {
+          @for (user of filteredUsers(); track user.id) {
             <tr class="item-clickeable" user-item [user]="user" (deleteItem)="onDeleteItem($event)"></tr>
           }
         </tbody>

@@ -1,4 +1,5 @@
 export interface ItemToDelete {
   id: number;
-  type: string;
+  type?: string;
+  deleted?: boolean;
 }

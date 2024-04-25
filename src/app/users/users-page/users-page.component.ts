@@ -1,4 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  WritableSignal,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { UserFilterPipe } from '../pipes/user-filter.pipe';
@@ -6,6 +13,7 @@ import { UserItemComponent } from '../user-item/user-item.component';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UsersService } from '../services/users.service';
 import { User } from '../interfaces/user.entity';
+import { ItemToDelete } from '../../common/interfaces/item-to-delete.interface';
 
 @Component({
   selector: 'users-page',
@@ -17,8 +25,6 @@ import { User } from '../interfaces/user.entity';
 export class UsersPageComponent implements OnInit {
   #usersService = inject(UsersService);
 
-  constructor() {}
-
   title: string = 'Users registered in Blogging';
   headers = {
     id: 'id',
@@ -27,32 +33,33 @@ export class UsersPageComponent implements OnInit {
     memberSince: 'Member since',
     delete: 'Delete',
   };
-  search: string = '';
+  search: WritableSignal<string> = signal('');
+  filteredUsers = computed(() =>
+    this.users().filter((u) =>
+      u.username.toLowerCase().includes(this.search().toLowerCase())
+    )
+  );
+  users: WritableSignal<User[]> = signal([]);
 
-  users: User[] = [];
+  constructor() {}
 
   ngOnInit(): void {
     this.#usersService
       .getUsers()
       .subscribe({
         next: (users) => {
-          this.users = users;
-          console.log(users);
+          this.users.set(users);
         },
         error: (error) => console.log(error),
-      }).add(() => console.log('Users loaded!'));
+      })
+      .add(() => console.log('Users loaded!'));
   }
 
-  onAddUser(user: User): void {
-    const IS_ARRAY_EMPTY: boolean = this.users.length === 0;
-    user.id = IS_ARRAY_EMPTY
-      ? 1
-      : Math.max(...this.users.map((u) => u.id!)) + 1;
-    this.users = [...this.users, user];
-  }
-
-  onDeleteItem(deleted: boolean): void {
-    // this.users = this.users.filter((u) => u.id !== itemId);
-    console.log(deleted);
+  onDeleteItem({ deleted, id }: ItemToDelete): void {
+    if (deleted) {
+      this.users.set(this.users().filter((u) => u.id !== id));
+    } else {
+      console.log(`error at deleting item ${id}`);
+    }
   }
 }

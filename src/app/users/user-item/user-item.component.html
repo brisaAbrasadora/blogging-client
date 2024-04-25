@@ -2,4 +2,4 @@
 <td><a [routerLink]="['/users', user.id]">{{ user.username }}</a></td>
 <td>{{ user.email }}</td>
 <td>{{ user.memberSince | date }}</td>
-<td><delete-item [item]="{ id: user.id!, type: 'user' }" (itemDeleted)="onItemDeleted()" /></td>
+<td><delete-item [item]="{ id: user.id!, type: 'user' }" (deleted)="onItemDeleted($event)" /></td>

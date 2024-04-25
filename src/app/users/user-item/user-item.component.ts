@@ -4,6 +4,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DeleteItemComponent } from '../../common/delete-item/delete-item.component';
 import { User } from '../interfaces/user.entity';
 import { RouterLink } from '@angular/router';
+import { ItemToDelete } from '../../common/interfaces/item-to-delete.interface';
 
 @Component({
   selector: 'tr[user-item]',
@@ -13,7 +14,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './user-item.component.css',
 })
 export class UserItemComponent {
-  @Output() deleteItem = new EventEmitter<boolean>();
+  @Output() deleteItem = new EventEmitter<ItemToDelete>();
   constructor() {}
 
   @Input({ required: true }) user: User = {
@@ -25,7 +26,7 @@ export class UserItemComponent {
     updatedAt: new Date(Date.now()).toString(),
   };
 
-  onItemDeleted() {
-    this.deleteItem.emit(true);
+  onItemDeleted({ id, deleted }: ItemToDelete) {
+    this.deleteItem.emit({ deleted: deleted, id: id });
   }
 }
