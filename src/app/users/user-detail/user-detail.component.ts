@@ -19,6 +19,11 @@ import { Router } from '@angular/router';
 export class UserDetailComponent implements OnInit {
   @Input() user!: User;
 
+  headers = {
+    id: 'ID',
+    'title': 'Title',
+  };
+
   #titleService = inject(Title);
   #router = inject(Router);
 
@@ -28,5 +33,6 @@ export class UserDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.#titleService.setTitle(`${this.user.username} details | Blogging`);
+    console.log(this.user);
   }
 }

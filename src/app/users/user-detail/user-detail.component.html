@@ -7,6 +7,28 @@
     <div>Member since: {{ user.memberSince | date }}</div>
     <div>Password: {{ user.password }}</div>
     <div>Updated at: {{ user.updatedAt }}</div>
+    @if(user.blogs?.length) {
+    <div class="table-responsive">
+      <table class="table table-striped m-0">
+        <thead>
+          <tr>
+            <th>{{ headers.id }}</th>
+            <th>{{ headers.title }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (blog of user.blogs; track blog.id) {
+          <tr>
+            <td>{{ blog.id }}</td>
+            <td>{{ blog.title }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    } @else {
+    <p>Has no blogs.</p>
+    }
     <div class="mt-3">
       <button type="button" class="btn btn-danger" (click)="goBack()">
         Go back
