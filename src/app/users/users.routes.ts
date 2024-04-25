@@ -22,7 +22,7 @@ export const usersRoutes: Routes = [
       ),
   },
   {
-    path: 'd:id',
+    path: ':id',
     canActivate: [numericIdGuard],
     resolve: {
       user: usersResolver,

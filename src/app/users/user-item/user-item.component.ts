@@ -3,16 +3,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { DeleteItemComponent } from '../../common/delete-item/delete-item.component';
 import { User } from '../interfaces/user.entity';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'tr[user-item]',
   standalone: true,
-  imports: [CommonModule, DeleteItemComponent],
+  imports: [CommonModule, RouterLink, DeleteItemComponent],
   templateUrl: './user-item.component.html',
   styleUrl: './user-item.component.css',
 })
 export class UserItemComponent {
-  @Output() deleteItem = new EventEmitter<number>();
+  @Output() deleteItem = new EventEmitter<boolean>();
   constructor() {}
 
   @Input({ required: true }) user: User = {
@@ -24,7 +25,7 @@ export class UserItemComponent {
     updatedAt: new Date(Date.now()).toString(),
   };
 
-  onItemDeleted(itemId: number) {
-    this.deleteItem.emit(itemId);
+  onItemDeleted() {
+    this.deleteItem.emit(true);
   }
 }

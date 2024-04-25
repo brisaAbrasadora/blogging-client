@@ -35,4 +35,9 @@ export class UsersService {
       .post<UserResponse>(`${this.#usersUrl}`, newUser)
       .pipe(map((resp) => resp.user));
   }
+
+  deleteUser(id: number): Observable<void> {
+    return this.#http
+      .delete<void>(`${this.#usersUrl}/${id}`);
+  }
 }

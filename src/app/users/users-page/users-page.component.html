@@ -39,7 +39,7 @@
         </thead>
         <tbody>
           @for (user of users | userFilter:search; track user.id) {
-            <tr class="item-clickeable" user-item [user]="user" (deleteItem)="onDeleteItem($event)" (click)="goToDetails(user.id)"></tr>
+            <tr class="item-clickeable" user-item [user]="user" (deleteItem)="onDeleteItem($event)"></tr>
           }
         </tbody>
       </table>

@@ -1,4 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
+import { ItemToDelete } from '../interfaces/item-to-delete.interface';
+import { UsersService } from '../../users/services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'delete-item',
@@ -8,10 +11,26 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './delete-item.component.css',
 })
 export class DeleteItemComponent {
-  @Input({ required: true }) itemId: number = 0;
-  @Output() itemDeleted = new EventEmitter<number>();
+  @Input({ required: true }) item!: ItemToDelete;
 
-  deleteItem(itemId: number) {
-    this.itemDeleted.emit(itemId);
+  #usersService: UsersService = inject(UsersService);
+  #router: Router = inject(Router);
+
+  deleteItem({ id, type }: ItemToDelete) {
+    console.log(this.item);
+    switch (type) {
+      case 'user':
+        this.#deleteUser(id);
+        break;
+      default:
+        console.log('error');
+    }
+  }
+
+  #deleteUser(id: number): void {
+    this.#usersService.deleteUser(id).subscribe({
+      next: () => console.log('deleted'),
+      error: (error) => console.log(error.error)
+    });
   }
 }
