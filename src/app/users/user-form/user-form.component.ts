@@ -11,8 +11,11 @@ import {
 import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
 import { UserRegister } from '../interfaces/user.entity';
-import { formRequiredValidator } from '../../common/validators/form-required.validator';
-import { emailExistsValidator } from '../../common/validators/email-exists.validator';
+import {
+  formRequiredValidator,
+  invalidPasswordValidator,
+  invalidUsernameValidator,
+} from '../../common/validators';
 
 @Component({
   selector: 'user-form',
@@ -27,6 +30,7 @@ export class UserFormComponent implements OnInit {
   username: FormControl = this.#formBuilder.control('', [
     Validators.required,
     Validators.minLength(5),
+    invalidUsernameValidator,
   ]);
   email: FormControl = this.#formBuilder.control('', [
     Validators.required,
@@ -34,7 +38,8 @@ export class UserFormComponent implements OnInit {
   ]);
   password: FormControl = this.#formBuilder.control('', [
     Validators.required,
-    Validators.minLength(4),
+    Validators.minLength(8),
+    invalidPasswordValidator,
   ]);
 
   userForm: FormGroup = this.#formBuilder.group(
@@ -53,12 +58,18 @@ export class UserFormComponent implements OnInit {
   #usersService: UsersService = inject(UsersService);
   #router: Router = inject(Router);
   #emails: string[] = [];
+  #usernames: string[] = [];
 
   constructor() {
     this.resetForm();
-    this.#usersService.getUsers().subscribe({
-      next: (users) => {
-        this.#emails = users.map((u) => u.email);
+    this.#usersService.getEmails().subscribe({
+      next: (emails) => {
+        this.#emails = emails;
+      },
+    });
+    this.#usersService.getUsernames().subscribe({
+      next: (usernames) => {
+        this.#usernames = usernames;
       },
     });
   }
@@ -72,28 +83,26 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.email.valueChanges.subscribe((email) => {
-      if (this.#emails.includes(email)) {
+      if (this.#emails.includes(email.toLowerCase())) {
         this.email.setErrors({
+          notUnique: true,
+        });
+      }
+    });
+    this.username.valueChanges.subscribe((username) => {
+      if (this.#usernames.includes(username.toLowerCase())) {
+        this.username.setErrors({
           notUnique: true,
         });
       }
     });
   }
 
-  validClasses(
-    formControl: FormControl,
-    validClass: string,
-    errorClass: string
-  ) {
-    return {
-      [validClass]: formControl.touched && formControl.valid,
-      [errorClass]: formControl.touched && formControl.invalid,
-    };
-  }
-
   registerUser() {
     const newUser: UserRegister = {
-      ...this.userForm.getRawValue(),
+      username: this.username.value,
+      email: this.email.value.toLowerCase(),
+      password: this.password.value,
     };
     this.#usersService.registerUser(newUser).subscribe({
       next: () => {
@@ -108,5 +117,16 @@ export class UserFormComponent implements OnInit {
 
   resetForm() {
     this.userForm.reset();
+  }
+
+  validClasses(
+    formControl: FormControl,
+    validClass: string,
+    errorClass: string
+  ) {
+    return {
+      [validClass]: formControl.touched && formControl.valid,
+      [errorClass]: formControl.touched && formControl.invalid,
+    };
   }
 }

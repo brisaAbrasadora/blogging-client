@@ -22,6 +22,13 @@
             {{ username.errors?.['minlength'].requiredLength - username.errors?.['minlength'].actualLength }}
             characters more.
           </div>
+          } @if(username.errors?.['invalidFormat']) {
+          <div class="invalid-feedback">
+            Username must not have whitespaces, and only contain alphanumeric
+            characters, dash and underscores
+          </div>
+          } @if(username.errors?.['notUnique']) {
+          <div class="invalid-feedback">Username is already in use</div>
           }
         </div>
       </div>
@@ -37,11 +44,12 @@
             formControlName="email"
             [ngClass]="validClasses(email, 'is-valid', 'is-invalid')"
           />
-          <p>{{ email.errors | json }}</p>
           @if(email.errors?.['required']) {
           <div class="invalid-feedback">Email cannot be empty</div>
           } @if(email.errors?.['email']) {
           <div class="invalid-feedback">Email format is incorrect</div>
+          } @if(email.errors?.['notUnique']) {
+          <div class="invalid-feedback">Email is already in use</div>
           }
         </div>
       </div>
@@ -65,13 +73,29 @@
             {{ password.errors?.['minlength'].requiredLength - password.errors?.['minlength'].actualLength }}
             characters more.
           </div>
+          } @if(password.errors?.['noNumber']) {
+          <div class="invalid-feedback">Must include a number</div>
+          } @if(password.errors?.['noUppercase']) {
+          <div class="invalid-feedback">Must include an uppercase</div>
+          } @if(password.errors?.['noLowercase']) {
+          <div class="invalid-feedback">Must include a lowercase</div>
+          } @if(password.errors?.['noSpecialChar']) {
+          <div class="invalid-feedback">Must include a special character</div>
+          } @if(password.errors?.['whitespace']) {
+          <div class="invalid-feedback">Must not have whitespace</div>
           }
         </div>
       </div>
 
       <div class="mb-3 row">
         <div class="offset-sm-2 col-sm-10">
-          <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Submit</button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="userForm.invalid"
+          >
+            Submit
+          </button>
           <button
             type="button"
             class="btn btn-secondary ms-2"
