@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 
 import { UserFilterPipe } from '../pipes/user-filter.pipe';
 import { UserItemComponent } from '../user-item/user-item.component';
-import { UserFormComponent } from '../user-form/user-form.component';
+import { RegisterComponent } from '../../auth/register/register.component';
 import { UsersService } from '../services/users.service';
 import { User } from '../interfaces/user.entity';
 import { ItemToDelete } from '../../common/interfaces/item-to-delete.interface';
@@ -18,7 +18,7 @@ import { ItemToDelete } from '../../common/interfaces/item-to-delete.interface';
 @Component({
   selector: 'users-page',
   standalone: true,
-  imports: [FormsModule, UserFilterPipe, UserItemComponent, UserFormComponent],
+  imports: [FormsModule, UserFilterPipe, UserItemComponent, RegisterComponent],
   templateUrl: './users-page.component.html',
   styleUrl: './users-page.component.css',
 })

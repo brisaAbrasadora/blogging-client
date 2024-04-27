@@ -8,6 +8,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 
 import {
+  AccessTokenResponse,
   EmailResponse,
   UserResponse,
   UsernameResponse,
@@ -15,6 +16,7 @@ import {
 } from '../interfaces/responses';
 import { Observable, map } from 'rxjs';
 import { User } from '../interfaces/user.entity';
+import { Login } from '../../auth/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -66,6 +68,12 @@ export class UsersService {
     return this.#http
       .post<UserResponse>(`${this.#usersUrl}`, newUser)
       .pipe(map((resp: UserResponse) => resp.user));
+  }
+
+  loginUser(user: Login): Observable<string> {
+    return this.#http
+      .post<AccessTokenResponse>(`auth/login`, user)
+      .pipe(map((resp: AccessTokenResponse) => resp.accessToken));
   }
 
   deleteUser(id: number): Observable<void> {

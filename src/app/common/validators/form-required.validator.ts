@@ -4,9 +4,9 @@ export function formRequiredValidator(
   c: AbstractControl
 ): ValidationErrors | null {
   if (
-    !c.get('username')!.value &&
-    !c.get('email')!.value &&
-    !c.get('password')!.value
+    !c.get('username')?.value &&
+    !c.get('email')?.value &&
+    !c.get('password')?.value
   ) {
     return { formRequired: true };
   }

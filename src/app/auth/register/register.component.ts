@@ -8,9 +8,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { UsersService } from '../services/users.service';
+import { UsersService } from '../../users/services/users.service';
 import { Router } from '@angular/router';
-import { UserRegister } from '../interfaces/user.entity';
+import { UserRegister } from '../../users/interfaces/user.entity';
 import {
   formRequiredValidator,
   invalidPasswordValidator,
@@ -21,10 +21,10 @@ import {
   selector: 'user-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './user-form.component.html',
-  styleUrl: './user-form.component.css',
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css',
 })
-export class UserFormComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   #formBuilder: NonNullableFormBuilder = inject(NonNullableFormBuilder);
 
   username: FormControl = this.#formBuilder.control('', [
