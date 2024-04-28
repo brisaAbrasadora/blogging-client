@@ -1,14 +1,7 @@
-import {
-  Injectable,
-  Signal,
-  WritableSignal,
-  inject,
-  signal,
-} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {
-  AccessTokenResponse,
   EmailResponse,
   UserResponse,
   UsernameResponse,
@@ -16,7 +9,6 @@ import {
 } from '../interfaces/responses';
 import { Observable, map } from 'rxjs';
 import { User } from '../interfaces/user.entity';
-import { Login } from '../../auth/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -24,20 +16,21 @@ import { Login } from '../../auth/interfaces';
 export class UsersService {
   #usersUrl = 'users';
   #http = inject(HttpClient);
-  #logged: WritableSignal<boolean> = signal(false);
 
   constructor() {}
 
-  get logged(): Signal<boolean> {
-    return this.#logged.asReadonly();
-  }
-
-  getUser(id: number): Observable<User> {
-    return this.#http.get<UserResponse>(`${this.#usersUrl}/${id}`).pipe(
-      map((resp: UserResponse) => {
-        return resp.user;
-      })
-    );
+  getUser(id?: number): Observable<User> {
+    if (id) {
+      return this.#http.get<UserResponse>(`${this.#usersUrl}/${id}`).pipe(
+        map((resp: UserResponse) => {
+          return resp.user;
+        })
+      );
+    } else {
+      return this.#http
+        .get<UserResponse>(`${this.#usersUrl}/me`)
+        .pipe(map((resp) => resp.user));
+    }
   }
 
   getUsers(): Observable<User[]> {
@@ -62,18 +55,6 @@ export class UsersService {
         return resp.usernames;
       })
     );
-  }
-
-  registerUser(newUser: User): Observable<User> {
-    return this.#http
-      .post<UserResponse>(`${this.#usersUrl}`, newUser)
-      .pipe(map((resp: UserResponse) => resp.user));
-  }
-
-  loginUser(user: Login): Observable<string> {
-    return this.#http
-      .post<AccessTokenResponse>(`auth/login`, user)
-      .pipe(map((resp: AccessTokenResponse) => resp.accessToken));
   }
 
   deleteUser(id: number): Observable<void> {

@@ -16,6 +16,7 @@ import {
   invalidPasswordValidator,
   invalidUsernameValidator,
 } from '../../common/validators';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'user-form',
@@ -56,6 +57,7 @@ export class RegisterComponent implements OnInit {
   saved: boolean = false;
 
   #usersService: UsersService = inject(UsersService);
+  #authService: AuthService = inject(AuthService);
   #router: Router = inject(Router);
   #emails: string[] = [];
   #usernames: string[] = [];
@@ -104,7 +106,7 @@ export class RegisterComponent implements OnInit {
       email: this.email.value.toLowerCase(),
       password: this.password.value,
     };
-    this.#usersService.registerUser(newUser).subscribe({
+    this.#authService.registerUser(newUser).subscribe({
       next: () => {
         this.saved = true;
         this.#router.navigate(['/users']);

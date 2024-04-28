@@ -8,10 +8,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { UsersService } from '../../users/services/users.service';
 import { Router } from '@angular/router';
 import { formRequiredValidator } from '../../common/validators';
 import { Login } from '../interfaces';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'login',
@@ -41,7 +41,7 @@ export class LoginComponent {
     }
   );
 
-  #usersService: UsersService = inject(UsersService);
+  #authService: AuthService = inject(AuthService);
   #router: Router = inject(Router);
 
   constructor() {
@@ -53,9 +53,9 @@ export class LoginComponent {
       username: this.username.value,
       password: this.password.value,
     };
-    this.#usersService.loginUser(user).subscribe({
-      next: (r) => {
-        console.log(r);
+    this.#authService.loginUser(user).subscribe({
+      next: () => {
+        this.#router.navigate(['/users']);
       },
       error: (error) => {
         console.log(error.error);

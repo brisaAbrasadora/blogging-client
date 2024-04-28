@@ -10,5 +10,5 @@ export interface User extends UserRegister {
 export interface UserRegister {
   username: string;
   email: string;
-  password: string;
+  password?: string;
 }

@@ -1,6 +1,6 @@
 import { Component, Signal, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { UsersService } from '../../users/services/users.service';
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'navbar',
@@ -11,6 +11,10 @@ import { UsersService } from '../../users/services/users.service';
 })
 export class NavbarComponent {
   title = 'Blogging';
-  logged: Signal<boolean> = computed(() => this.#usersService.logged());
-  #usersService: UsersService = inject(UsersService);
+  logged: Signal<boolean> = computed(() => this.#authService.logged());
+  #authService: AuthService = inject(AuthService);
+
+  logout(): void {
+    this.#authService.logout();
+  }
 }
