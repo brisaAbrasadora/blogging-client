@@ -13,6 +13,7 @@ export class NavbarComponent {
   title = 'Blogging';
   logged: Signal<boolean> = computed(() => this.#authService.logged());
   #authService: AuthService = inject(AuthService);
+  username: Signal<string> = computed(() => this.#authService.username());
 
   logout(): void {
     this.#authService.logout();

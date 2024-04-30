@@ -21,6 +21,8 @@ export class AuthService {
   #authUrl = 'auth';
   #http = inject(HttpClient);
   #logged: WritableSignal<boolean> = signal(false);
+  #id: WritableSignal<number> = signal(0);
+  #username: WritableSignal<string> = signal('');
 
   constructor() {}
 
@@ -32,8 +34,10 @@ export class AuthService {
         return this.#http
           .get<AccessTokenResponse>(`${this.#authUrl}/validate`)
           .pipe(
-            map(() => {
+            map(({ id, username }: AccessTokenResponse) => {
               this.#logged.set(true);
+              this.#username.set(username);
+              this.#id.set(id);
               return true;
             }),
             catchError(() => {
@@ -50,6 +54,14 @@ export class AuthService {
     return this.#logged.asReadonly();
   }
 
+  get id(): Signal<number> {
+    return this.#id.asReadonly();
+  }
+
+  get username(): Signal<string> {
+    return this.#username.asReadonly();
+  }
+
   registerUser(newUser: User): Observable<User> {
     return this.#http
       .post<UserResponse>(`${this.#authUrl}/register`, newUser)
@@ -60,9 +72,11 @@ export class AuthService {
     return this.#http
       .post<AccessTokenResponse>(`${this.#authUrl}/login`, user)
       .pipe(
-        map((resp: AccessTokenResponse) => {
-          localStorage.setItem('token', resp.accessToken);
+        map(({ id, username, accessToken }: AccessTokenResponse) => {
+          localStorage.setItem('token', accessToken!);
           this.#logged.set(true);
+          this.#username.set(username);
+          this.#id.set(id);
         })
       );
   }

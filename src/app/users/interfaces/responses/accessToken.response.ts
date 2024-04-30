@@ -1,4 +1,5 @@
 export interface AccessTokenResponse {
-  accessToken: string;
+  accessToken?: string;
   id: number;
+  username: string;
 }
