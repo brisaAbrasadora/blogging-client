@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { formRequiredValidator } from '../../common/validators';
-import { Login } from '../interfaces';
+import { Login } from '../interfaces/dto';
 import { AuthService } from '../services/auth.service';
 
 @Component({

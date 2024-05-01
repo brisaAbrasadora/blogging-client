@@ -6,13 +6,14 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { User } from '../../users/interfaces/user.entity';
 import { Observable, catchError, map, of } from 'rxjs';
+
 import {
-  AccessTokenResponse,
   UserResponse,
 } from '../../users/interfaces/responses';
-import { Login } from '../interfaces';
+import { Login } from '../interfaces/dto';
+import { User } from '../../users/interfaces/user.entity';
+import { AccessTokenResponse, ValidateResponse } from '../interfaces/responses';
 
 @Injectable({
   providedIn: 'root',
@@ -32,9 +33,9 @@ export class AuthService {
     } else {
       if (localStorage.getItem('token')) {
         return this.#http
-          .get<AccessTokenResponse>(`${this.#authUrl}/validate`)
+          .get<ValidateResponse>(`${this.#authUrl}/validate`)
           .pipe(
-            map(({ id, username }: AccessTokenResponse) => {
+            map(({ id, username }: ValidateResponse) => {
               this.#logged.set(true);
               this.#username.set(username);
               this.#id.set(id);
