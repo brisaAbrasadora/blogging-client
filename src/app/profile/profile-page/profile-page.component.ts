@@ -15,7 +15,7 @@ import { User } from '../../users/interfaces/user.entity';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './profile-page.component.html',
-  styleUrl: './profile-page.component.css',
+  styleUrl: './profile-page.component.scss',
 })
 export class ProfilePageComponent implements OnInit {
   @Input() user!: User;

@@ -10,7 +10,7 @@ export const logoutActivateGuard: CanActivateFn = () => {
     return authService.isLogged().pipe(
         map((resp) => {
             if(resp) {
-                return router.createUrlTree(["/posts"]);
+                return router.createUrlTree(["/timeline"]);
             } else {
                 return true;
             }

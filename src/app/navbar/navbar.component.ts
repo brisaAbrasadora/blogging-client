@@ -1,13 +1,14 @@
 import { Component, Signal, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
+import { LoginComponent } from '../auth/login/login.component';
 
 @Component({
   selector: 'navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, LoginComponent],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css',
+  styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
   title = 'Blogging';

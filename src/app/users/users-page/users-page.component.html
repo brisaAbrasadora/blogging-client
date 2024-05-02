@@ -1,52 +1,60 @@
-<!-- <user-form (addUser)="onAddUser($event)"></user-form> -->
-
-<div class="card">
-  <div class="card-header bg-primary text-white">
-    {{ title }}
-  </div>
-  <div class="card-block">
-    <form action="" class="form p-3">
-      <div class="row">
-        <label for="filterUsername" class="col-form-label col-sm-2 text-sm-end">
-          Filter:
-        </label>
-        <div class="col-sm-5">
-          <input
-            type="text"
-            class="form-control"
-            name="filterUsername"
-            id="filterUsername"
-            placeholder="Filter..."
-            [ngModel]="search()"
-            (ngModelChange)="search.set($event)"
-          />
-        </div>
-        <label for="" class="col-form-label col-sm-5">
-          Filtered by: {{ search() }}
-        </label>
-      </div>
-    </form>
-    @if (filteredUsers().length) {
-    <div class="table-responsive">
-      <table class="table table-striped m-0">
-        <thead>
-          <tr>
-            <th>{{ headers.id }}</th>
-            <th>{{ headers.username }}</th>
-            <th>{{ headers.email }}</th>
-            <th>{{ headers.memberSince }}</th>
-            <th>{{ headers.delete }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (user of filteredUsers(); track user.id) {
-            <tr class="item-clickeable" user-item [user]="user" (deleteItem)="onDeleteItem($event)"></tr>
-          }
-        </tbody>
-      </table>
+<div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1">
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      {{ title }}
     </div>
-    } @else {
-    <h3 class="p-4">No users found</h3>
-    }
+    <div class="card-block">
+      <form action="" class="form p-3">
+        <div class="row">
+          <label
+            for="filterUsername"
+            class="col-form-label col-sm-2 text-sm-end"
+          >
+            Filter:
+          </label>
+          <div class="col-sm-5">
+            <input
+              type="text"
+              class="form-control"
+              name="filterUsername"
+              id="filterUsername"
+              placeholder="Filter..."
+              [ngModel]="search()"
+              (ngModelChange)="search.set($event)"
+            />
+          </div>
+          <label for="" class="col-form-label col-sm-5">
+            Filtered by: {{ search() }}
+          </label>
+        </div>
+      </form>
+      @if (filteredUsers().length) {
+      <div class="table-responsive">
+        <table class="table table-striped m-0">
+          <thead>
+            <tr>
+              <th>{{ headers.id }}</th>
+              <th>{{ headers.username }}</th>
+              <th>{{ headers.email }}</th>
+              <th>{{ headers.memberSince }}</th>
+              <th>{{ headers.delete }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (user of filteredUsers(); track user.id) {
+            <tr
+              class="item-clickeable"
+              user-item
+              [user]="user"
+              (deleteItem)="onDeleteItem($event)"
+            ></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      } @else {
+      <h3 class="p-4">No users found</h3>
+      }
+    </div>
   </div>
 </div>

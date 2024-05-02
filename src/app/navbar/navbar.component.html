@@ -2,48 +2,59 @@
   <div class="container-fluid">
     <a class="navbar-brand" [routerLink]="['/']">{{ title }}</a>
     <ul class="navbar-nav me-auto">
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          [routerLink]="['/users']"
-          [routerLinkActive]="['active']"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          Users
-        </a>
-      </li>
-      @if(logged()) {
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          [routerLink]="['/profile']"
-          [routerLinkActive]="['active']"
-          [routerLinkActiveOptions]="{ exact: true }"
-          >{{username()}}</a
-        >
-      </li>
-      }
     </ul>
     <ul class="navbar-nav">
       @if(logged()) {
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/auth/login']" (click)="logout()">
-          Logout
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <!--[routerLink]="['/auth/login']" (click)="logout()"-->
+          {{ username() }}
         </a>
+        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+          <li>
+            <a
+              class="dropdown-item"
+              [routerLink]="['/profile']"
+              [routerLinkActive]="['active']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              ><i class="fa-solid fa-user"></i> My profile</a
+            >
+          </li>
+          <li>
+            <a href="#" class="dropdown-item disabled"
+              ><i class="fa-solid fa-book"></i> My blogs</a
+            >
+          </li>
+          <li>
+            <a href="#" class="dropdown-item disabled"
+              ><i class="fa-solid fa-gear"></i> Settings</a
+            >
+          </li>
+          <li>
+            <a href="#" class="dropdown-item text-danger" (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+          </li>
+        </ul>
       </li>
       } @else {
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/auth/login']"> Login </a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          [routerLink]="['/auth/register']"
-          [routerLinkActive]="['active']"
+        <li class="nav-item dropdown">
+          <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          data-bs-auto-close="outside"
         >
-          Register
+          Login
         </a>
-      </li>
+        <login class="dropdown-menu p-4 dropdown-menu-end"/>
+        </li>
       }
     </ul>
   </div>

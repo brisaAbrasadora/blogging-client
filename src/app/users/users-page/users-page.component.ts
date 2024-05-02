@@ -10,7 +10,6 @@ import { FormsModule } from '@angular/forms';
 
 import { UserFilterPipe } from '../pipes/user-filter.pipe';
 import { UserItemComponent } from '../user-item/user-item.component';
-import { RegisterComponent } from '../../auth/register/register.component';
 import { UsersService } from '../services/users.service';
 import { User } from '../interfaces/user.entity';
 import { ItemToDelete } from '../../common/interfaces/item-to-delete.interface';
@@ -18,9 +17,9 @@ import { ItemToDelete } from '../../common/interfaces/item-to-delete.interface';
 @Component({
   selector: 'users-page',
   standalone: true,
-  imports: [FormsModule, UserFilterPipe, UserItemComponent, RegisterComponent],
+  imports: [FormsModule, UserFilterPipe, UserItemComponent],
   templateUrl: './users-page.component.html',
-  styleUrl: './users-page.component.css',
+  styleUrl: './users-page.component.scss',
 })
 export class UsersPageComponent implements OnInit {
   #usersService = inject(UsersService);

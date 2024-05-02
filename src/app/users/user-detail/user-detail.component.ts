@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './user-detail.component.html',
-  styleUrl: './user-detail.component.css',
+  styleUrl: './user-detail.component.scss',
 })
 export class UserDetailComponent implements OnInit {
   @Input() user!: User;

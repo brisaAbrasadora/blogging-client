@@ -12,7 +12,7 @@ export const loginActivateGuard: CanActivateFn = () => {
       if (resp) {
         return true;
       } else {
-        return router.createUrlTree(['/auth/login']);
+        return router.createUrlTree(['/welcome']);
       }
     })
   );

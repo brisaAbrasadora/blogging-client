@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { formRequiredValidator } from '../../common/validators';
 import { Login } from '../interfaces/dto';
 import { AuthService } from '../services/auth.service';
@@ -16,9 +16,10 @@ import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink
+  ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   #formBuilder: NonNullableFormBuilder = inject(NonNullableFormBuilder);
@@ -55,7 +56,7 @@ export class LoginComponent {
     };
     this.#authService.loginUser(user).subscribe({
       next: () => {
-        this.#router.navigate(['/users']);
+        this.#router.navigate(['/timeline']);
       },
       error: (error) => {
         console.log(error.error);

@@ -11,7 +11,7 @@ import { ItemToDelete } from '../../common/interfaces/item-to-delete.interface';
   standalone: true,
   imports: [CommonModule, RouterLink, DeleteItemComponent],
   templateUrl: './user-item.component.html',
-  styleUrl: './user-item.component.css',
+  styleUrl: './user-item.component.scss',
 })
 export class UserItemComponent {
   @Output() deleteItem = new EventEmitter<ItemToDelete>();

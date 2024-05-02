@@ -1,11 +1,18 @@
 import { Routes } from '@angular/router';
+import { logoutActivateGuard } from './common/guards/logout-activate.guard';
 
 export const routes: Routes = [
   {
     path: 'welcome',
     title: 'Welcome | Blogging',
+    canActivate: [logoutActivateGuard],
     loadComponent: () =>
       import('./welcome/welcome.component').then((m) => m.WelcomeComponent),
+  },
+  {
+    path: 'timeline',
+    loadChildren: () =>
+      import('./timeline/timeline.routes').then((m) => m.profileRoutes),
   },
   {
     path: 'users',
@@ -21,6 +28,6 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./profile/profile.routes').then((m) => m.profileRoutes),
   },
-  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
-  { path: '**', redirectTo: '/welcome' },
+  { path: '', redirectTo: '/timeline', pathMatch: 'full' },
+  { path: '**', redirectTo: '/timeline' },
 ];

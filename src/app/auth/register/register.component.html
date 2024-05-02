@@ -1,110 +1,113 @@
-<div class="card mb-4">
-  <div class="card-header bg-success text-white">Register user</div>
-  <div class="card-body">
-    <form [formGroup]="userForm" (ngSubmit)="registerUser()">
-      <div class="mb-3 row">
-        <label for="username" class="col-sm-2 col-form-label text-sm-end"
-          >Username</label
-        >
-        <div class="col-sm-10">
-          <input
-            type="text"
-            class="form-control"
-            name="username"
-            formControlName="username"
-            [ngClass]="validClasses(username, 'is-valid', 'is-invalid')"
-          />
-          @if(username.errors?.['required']) {
-          <div class="invalid-feedback">Username cannot be empty</div>
-          } @if(username.errors?.['minlength']) {
-          <div class="invalid-feedback">
-            You must enter at least
-            {{ username.errors?.['minlength'].requiredLength - username.errors?.['minlength'].actualLength }}
-            characters more.
-          </div>
-          } @if(username.errors?.['invalidFormat']) {
-          <div class="invalid-feedback">
-            Username must not have whitespaces, and only contain alphanumeric
-            characters, dash and underscores
-          </div>
-          } @if(username.errors?.['notUnique']) {
-          <div class="invalid-feedback">Username is already in use</div>
-          }
-        </div>
-      </div>
-      <div class="mb-3 row">
-        <label for="email" class="col-sm-2 col-form-label text-sm-end"
-          >Email</label
-        >
-        <div class="col-sm-10">
-          <input
-            type="email"
-            class="form-control"
-            name="email"
-            formControlName="email"
-            [ngClass]="validClasses(email, 'is-valid', 'is-invalid')"
-          />
-          @if(email.errors?.['required']) {
-          <div class="invalid-feedback">Email cannot be empty</div>
-          } @if(email.errors?.['email']) {
-          <div class="invalid-feedback">Email format is incorrect</div>
-          } @if(email.errors?.['notUnique']) {
-          <div class="invalid-feedback">Email is already in use</div>
-          }
-        </div>
-      </div>
-      <div class="mb-3 row">
-        <label for="password" class="col-sm-2 col-form-label text-sm-end"
-          >Password</label
-        >
-        <div class="col-sm-10">
-          <input
-            type="password"
-            name="password"
-            class="form-control"
-            formControlName="password"
-            [ngClass]="validClasses(password, 'is-valid', 'is-invalid')"
-          />
-          @if(password.errors?.['required']) {
-          <div class="invalid-feedback">Password cannot be empty</div>
-          } @if(password.errors?.['minlength']) {
-          <div class="invalid-feedback">
-            You must enter at least
-            {{ password.errors?.['minlength'].requiredLength - password.errors?.['minlength'].actualLength }}
-            characters more.
-          </div>
-          } @if(password.errors?.['noNumber']) {
-          <div class="invalid-feedback">Must include a number</div>
-          } @if(password.errors?.['noUppercase']) {
-          <div class="invalid-feedback">Must include an uppercase</div>
-          } @if(password.errors?.['noLowercase']) {
-          <div class="invalid-feedback">Must include a lowercase</div>
-          } @if(password.errors?.['noSpecialChar']) {
-          <div class="invalid-feedback">Must include a special character</div>
-          } @if(password.errors?.['whitespace']) {
-          <div class="invalid-feedback">Must not have whitespace</div>
-          }
-        </div>
-      </div>
-
-      <div class="mb-3 row">
-        <div class="offset-sm-2 col-sm-10">
-          <button
-            type="submit"
-            class="btn btn-primary"
-            [disabled]="userForm.invalid"
+<div class="col-2 offset-5 col-md-4 offset-md-4">
+  <div class="card mb-4">
+    <div class="card-header bg-success text-white">Register user</div>
+    <div class="card-body">
+      <form [formGroup]="userForm" (ngSubmit)="registerUser()">
+        <div class="mb-3 row">
+          <label for="username" class="col-sm-12 col-form-label "
+            >Username</label
           >
-            Submit
-          </button>
-          <button
-            type="button"
-            class="btn btn-secondary ms-2"
-            (click)="resetForm()"
-          >
-            Reset
-          </button>
+          <div class="col-sm-12">
+            <input
+              type="text"
+              class="form-control"
+              name="username"
+              formControlName="username"
+              [ngClass]="validClasses(username, 'is-valid', 'is-invalid')"
+            />
+            @if(username.errors?.['required']) {
+            <div class="invalid-feedback">Username cannot be empty</div>
+            } @if(username.errors?.['minlength']) {
+            <div class="invalid-feedback">
+              You must enter at least
+              {{ username.errors?.['minlength'].requiredLength - username.errors?.['minlength'].actualLength }}
+              characters more.
+            </div>
+            } @if(username.errors?.['invalidFormat']) {
+            <div class="invalid-feedback">
+              Username must not have whitespaces, and only contain alphanumeric
+              characters, dash and underscores
+            </div>
+            } @if(username.errors?.['notUnique']) {
+            <div class="invalid-feedback">Username is already in use</div>
+            }
+          </div>
         </div>
-      </div>
-    </form>
+        <div class="mb-3 row">
+          <label for="email" class="col-sm-12 col-form-label "
+            >Email</label
+          >
+          <div class="col-sm-12">
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              formControlName="email"
+              [ngClass]="validClasses(email, 'is-valid', 'is-invalid')"
+            />
+            @if(email.errors?.['required']) {
+            <div class="invalid-feedback">Email cannot be empty</div>
+            } @if(email.errors?.['email']) {
+            <div class="invalid-feedback">Email format is incorrect</div>
+            } @if(email.errors?.['notUnique']) {
+            <div class="invalid-feedback">Email is already in use</div>
+            }
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="password" class="col-sm-12 col-form-label "
+            >Password</label
+          >
+          <div class="col-sm-12">
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              formControlName="password"
+              [ngClass]="validClasses(password, 'is-valid', 'is-invalid')"
+            />
+            @if(password.errors?.['required']) {
+            <div class="invalid-feedback">Password cannot be empty</div>
+            } @if(password.errors?.['minlength']) {
+            <div class="invalid-feedback">
+              You must enter at least
+              {{ password.errors?.['minlength'].requiredLength - password.errors?.['minlength'].actualLength }}
+              characters more.
+            </div>
+            } @if(password.errors?.['noNumber']) {
+            <div class="invalid-feedback">Must include a number</div>
+            } @if(password.errors?.['noUppercase']) {
+            <div class="invalid-feedback">Must include an uppercase</div>
+            } @if(password.errors?.['noLowercase']) {
+            <div class="invalid-feedback">Must include a lowercase</div>
+            } @if(password.errors?.['noSpecialChar']) {
+            <div class="invalid-feedback">Must include a special character</div>
+            } @if(password.errors?.['whitespace']) {
+            <div class="invalid-feedback">Must not have whitespace</div>
+            }
+          </div>
+        </div>
+  
+        <div class="mb-3 row">
+          <div class=" col-sm-12">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="userForm.invalid"
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary ms-2"
+              (click)="resetForm()"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
+  
 </div>
