@@ -14,6 +14,8 @@
           <tr>
             <th>{{ headers.id }}</th>
             <th>{{ headers.title }}</th>
+            <th>{{ headers.description }}</th>
+            <th>{{ headers.created }}</th>
           </tr>
         </thead>
         <tbody>
@@ -21,6 +23,8 @@
           <tr>
             <td>{{ blog.id }}</td>
             <td>{{ blog.title }}</td>
+            <td>{{ blog.description || "No description" }}</td>
+            <td> {{ blog.createdAt | date:'medium':'Europe/Paris' }}</td>
           </tr>
           }
         </tbody>

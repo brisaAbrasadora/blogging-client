@@ -61,5 +61,5 @@
   <button type="button" class="btn btn-secondary ms-2" (click)="resetForm()">
     Reset
   </button>
-  <p class="mb-0 mt-3">New around here? <a [routerLink]="['/auth/register']">Sign up!</a></p>
+  <p class="mb-0 mt-3">New around here? <a [routerLink]="['/auth/register']" (click)="closeForm()">Sign up!</a></p>
 </form>

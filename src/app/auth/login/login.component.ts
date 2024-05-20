@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import {
@@ -45,8 +45,12 @@ export class LoginComponent {
   #authService: AuthService = inject(AuthService);
   #router: Router = inject(Router);
 
-  constructor() {
+  constructor(private elementRef: ElementRef) {
     this.resetForm();
+  }
+
+  closeForm() {
+    this.elementRef.nativeElement.classList.remove('show');
   }
 
   loginUser() {

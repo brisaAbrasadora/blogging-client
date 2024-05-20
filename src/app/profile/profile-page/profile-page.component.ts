@@ -21,8 +21,10 @@ export class ProfilePageComponent implements OnInit {
   @Input() user!: User;
 
   headers = {
-    id: 'ID',
+    'id': 'ID',
     'title': 'Title',
+    'description': 'Description',
+    'created' : 'Created at',
   };
 
   #titleService = inject(Title);
