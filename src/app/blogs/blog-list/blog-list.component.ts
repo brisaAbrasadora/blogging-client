@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { Blog } from '../interfaces/entities';
-import { CommonModule } from '@angular/common';
-import { BlogService } from '../services/blog.service';
 
 @Component({
   selector: 'blog-list',
@@ -18,7 +18,6 @@ export class BlogListComponent implements OnInit {
   @Output() blogSelected = new EventEmitter<{blogId: number, i: number}>;
 
   blogLimit: boolean = false;
-  #blogService: BlogService = inject(BlogService);
   activeBlog = signal<number>(-1);
 
   displayTooltip(i: number): string {
@@ -29,11 +28,6 @@ export class BlogListComponent implements OnInit {
     const isDescriptionOverflow: boolean = blogDescription.clientWidth < blogDescription.scrollWidth;
     return isDescriptionOverflow ? blogDescription.innerText : '';
   }
-
-  // ngOnChanges(changes: SimpleChanges): void {
-  //     console.log(changes);
-  //     this.#blogService.getBlogsByUser()
-  // }
 
   ngOnInit(): void {
     this.blogLimit = this.blogs.length >= 5;

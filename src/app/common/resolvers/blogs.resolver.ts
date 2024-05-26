@@ -10,8 +10,6 @@ export const blogsResolver: ResolveFn<Blog[]> = (route) => {
     .getBlogsByUser(+route.params['id'])
     .pipe(
       catchError(() => {
-        console.log('error at usersResolver');
-        // inject(Router).navigate(['/users']);
         return EMPTY;
       })
     );

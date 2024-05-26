@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, Signal, computed, inject } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { invalidBlogTitleValidator } from '../validators/invalid-blog-title.validator';
-import { blogFormRequiredValidator } from '../validators/blog-form-required.validator';
-import { BlogService } from '../services/blog.service';
-import { AuthService } from '../../auth/services/auth.service';
-import { CreateBlog } from '../interfaces/entities/blog.entity';
 import { Router, RouterLink } from '@angular/router';
+
+import { blogFormRequiredValidator } from '../validators/blog-form-required.validator';
+import { invalidBlogTitleValidator } from '../validators/invalid-blog-title.validator';
+import { AuthService } from '../../auth/services/auth.service';
+import { BlogService } from '../services/blog.service';
+import { CreateBlog } from '../interfaces/entities/blog.entity';
 
 @Component({
   selector: 'create-blog',
@@ -40,12 +41,10 @@ export class CreateBlogComponent implements OnInit {
     }
   );
 
-  saved: boolean = false;
-
-  // #usersService: UsersService = inject(UsersService);
   #authService: AuthService = inject(AuthService);
   #blogService: BlogService = inject(BlogService);
   #router: Router = inject(Router);
+  saved: boolean = false;
   #titles: string[] = [];
 
   constructor() {
@@ -55,11 +54,6 @@ export class CreateBlogComponent implements OnInit {
         this.#titles = titles;
       },
     });
-    // this.#usersService.getUsernames().subscribe({
-    //   next: (usernames) => {
-    //     this.#usernames = usernames;
-    //   },
-    // });
   }
 
   canDeactivate(): boolean {
@@ -67,23 +61,6 @@ export class CreateBlogComponent implements OnInit {
       this.saved ||
       confirm('Do you want to leave this page? Changes can be lost.')
     );
-  }
-
-  ngOnInit(): void {
-    this.title.valueChanges.subscribe((title) => {
-      if (this.#titles.includes(title.toLowerCase())) {
-        this.title.setErrors({
-          notUnique: true,
-        });
-      }
-    });
-    // this.username.valueChanges.subscribe((username) => {
-    //   if (this.#usernames.includes(username.toLowerCase())) {
-    //     this.username.setErrors({
-    //       notUnique: true,
-    //     });
-    //   }
-    // });
   }
 
   createBlog() {
@@ -97,14 +74,24 @@ export class CreateBlogComponent implements OnInit {
     this.#blogService.createBlog(newBlog).subscribe({
       next: (resp) => {
         this.saved = resp;
-        this.#router.navigate(['/blogs']);
+        this.#router.navigate(['/my-blogs']);
       },
       error: (error) => {
         console.log(error.error);
       },
     });
   }
-
+  
+  ngOnInit(): void {
+    this.title.valueChanges.subscribe((title) => {
+      if (this.#titles.includes(title.toLowerCase())) {
+        this.title.setErrors({
+          notUnique: true,
+        });
+      }
+    });
+  }
+  
   resetForm() {
     this.blogForm.reset();
   }

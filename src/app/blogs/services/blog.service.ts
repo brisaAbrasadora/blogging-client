@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { Blog, UpdateBlog } from '../interfaces/entities';
+
 import {
   BlogResponse,
   BlogTitlesResponse,
   BlogsResponse,
 } from '../interfaces/responses';
+import { Blog, BlogToUpdateDTO } from '../interfaces/entities';
 import { CreateBlog } from '../interfaces/entities/blog.entity';
 
 @Injectable({
@@ -46,13 +47,13 @@ export class BlogService {
     }
   }
 
-  getTitles(userId: number): Observable<string[]> {
+  getTitles(userId?: number): Observable<string[]> {
     return this.#http
       .get<BlogTitlesResponse>(`${this.#blogsUrl}/titles/${userId}`)
       .pipe(map((resp) => resp.blogTitles));
   }
 
-  updateBlog(id: number, update: UpdateBlog): Observable<void> {
+  updateBlog(id: number, update: BlogToUpdateDTO): Observable<void> {
     return this.#http
       .patch<void>(`${this.#blogsUrl}/${id}`, update);
   }

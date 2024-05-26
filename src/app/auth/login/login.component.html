@@ -1,7 +1,6 @@
 <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
   <div class="mb-3">
     <label for="username" class="form-label">Username</label>
-
     <input
       type="text"
       class="form-control"
@@ -18,31 +17,8 @@
     </div>
     }
   </div>
-
-  <!-- <div class="mb-3 row">
-          <label for="email" class="col-sm-2 col-form-label text-sm-end"
-            >Email</label
-          >
-          <div class="col-sm-10">
-            <input
-              type="email"
-              class="form-control"
-              name="email"
-              formControlName="email"
-              [ngClass]="validClasses(email, 'is-valid', 'is-invalid')"
-            />
-            @if(email.errors?.['required']) {
-            <div class="invalid-feedback">Email cannot be empty</div>
-            } @if(email.errors?.['email']) {
-            <div class="invalid-feedback">Email format is incorrect</div>
-            } @if(email.errors?.['notUnique']) {
-            <div class="invalid-feedback">Email is already in use</div>
-            }
-          </div>
-        </div> -->
   <div class="mb-3">
     <label for="password" class="form-label">Password</label>
-
     <input
       type="password"
       name="password"
@@ -61,5 +37,8 @@
   <button type="button" class="btn btn-secondary ms-2" (click)="resetForm()">
     Reset
   </button>
-  <p class="mb-0 mt-3">New around here? <a [routerLink]="['/auth/register']" (click)="closeForm()">Sign up!</a></p>
+  <p class="mb-0 mt-3">
+    New around here?
+    <a [routerLink]="['/auth/register']" (click)="closeForm()">Sign up!</a>
+  </p>
 </form>

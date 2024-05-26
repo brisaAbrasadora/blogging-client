@@ -13,14 +13,14 @@
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          <!--[routerLink]="['/auth/login']" (click)="logout()"-->
           {{ username() }}
         </a>
         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
           <li>
+            <!--"['/profile']"-->
             <a
               class="dropdown-item"
-              [routerLink]="['/profile']"
+              [routerLink]="undefined" 
               [routerLinkActive]="['active']"
               [routerLinkActiveOptions]="{ exact: true }"
               ><i class="fa-solid fa-user"></i> My profile</a
@@ -28,7 +28,7 @@
           </li>
           <li>
             <a href="#" class="dropdown-item"
-            [routerLink]="['/blogs']"
+            [routerLink]="['/my-blogs']"
             [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="{ exact: true }"
               ><i class="fa-solid fa-book"></i> My blogs</a

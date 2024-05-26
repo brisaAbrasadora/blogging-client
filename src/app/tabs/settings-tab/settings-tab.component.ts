@@ -6,11 +6,9 @@ import {
   OnInit,
   Output,
   Signal,
-  SimpleChanges,
   computed,
   inject,
 } from '@angular/core';
-import { Blog, UpdateBlog } from '../../blogs/interfaces/entities';
 import {
   FormControl,
   FormGroup,
@@ -18,10 +16,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { invalidBlogTitleValidator } from '../../blogs/validators/invalid-blog-title.validator';
 import { CommonModule } from '@angular/common';
+
+import { invalidBlogTitleValidator } from '../../blogs/validators/invalid-blog-title.validator';
 import { BlogService } from '../../blogs/services/blog.service';
 import { AuthService } from '../../auth/services/auth.service';
+import { Blog, BlogToUpdateDTO } from '../../blogs/interfaces/entities';
 import { BlogToUpdate } from '../../common/interfaces/blog-to-update.interface';
 
 @Component({
@@ -37,9 +37,6 @@ export class SettingsTabComponent implements OnInit, OnChanges {
   @Output() descriptionUpdated = new EventEmitter<string>();
   @Output() blogDeleted = new EventEmitter<number>();
 
-  #authService: AuthService = inject(AuthService);
-  #blogService: BlogService = inject(BlogService);
-  currentUserId: Signal<number> = computed(() => this.#authService.id());
   #formBuilder: NonNullableFormBuilder = inject(NonNullableFormBuilder);
   title: FormControl = this.#formBuilder.control('', [
     Validators.required,
@@ -59,6 +56,10 @@ export class SettingsTabComponent implements OnInit, OnChanges {
     description: this.description,
   });
 
+  #authService: AuthService = inject(AuthService);
+  #blogService: BlogService = inject(BlogService);
+  currentUserId: Signal<number> = computed(() => this.#authService.id());
+
   constructor() {
     this.#blogService
       .getTitles(this.currentUserId())
@@ -73,7 +74,7 @@ export class SettingsTabComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.resetForms();
   }
 
@@ -96,7 +97,7 @@ export class SettingsTabComponent implements OnInit, OnChanges {
   }
 
   updateDescription(fromDelete: boolean): void {
-    const update: UpdateBlog = {
+    const update: BlogToUpdateDTO = {
       description: fromDelete ? '' : this.description.value,
     };
 
@@ -113,7 +114,7 @@ export class SettingsTabComponent implements OnInit, OnChanges {
   }
 
   updateTitle(): void {
-    const update: UpdateBlog = {
+    const update: BlogToUpdateDTO = {
       title: this.title.value,
     };
 

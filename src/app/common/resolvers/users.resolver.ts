@@ -10,7 +10,6 @@ export const usersResolver: ResolveFn<User> = (route) => {
     .getUser(+route.params['id'])
     .pipe(
       catchError(() => {
-        console.log('error at usersResolver');
         inject(Router).navigate(['/users']);
         return EMPTY;
       })

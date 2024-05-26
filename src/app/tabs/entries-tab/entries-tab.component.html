@@ -1,9 +1,32 @@
+<div class="d-flex w-100 justify-content-between p-2">
+  <h3 class="fw-normal">Entries</h3>
+  <a class="btn btn-primary" type="button" [routerLink]="[blog.id, 'new-entry']">
+    <i class="fa-solid fa-pen-to-square"></i> Write a new entry
+  </a>
+</div>
 @if (entries.length) {
-  <ul>
-    @for (entry of entries; track entry.id) {
-      <li>{{ entry.title }}</li>
-    }
-  </ul>
+
+<div class="list-group">
+  @for (entry of entries; track entry.id) {
+  <a class="list-group-item list-group-item-action" [routerLink]="undefined">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{ entry.title }}</h5>
+      <div class="btn-group" role="group" aria-label="Basic outlined example">
+        <button type="button" class="btn btn-sm btn-outline-primary" disabled>
+          <i class="fa-solid fa-eye"></i>
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-warning" disabled>
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteEntry(entry.id!)">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </div>
+    </div>
+    <small>Last edition at {{ entry.updatedAt | date }}</small>
+  </a>
+  }
+</div>
 } @else {
-  <p>No entries</p>
+<p>No entries</p>
 }

@@ -1,5 +1,5 @@
 <div class="p-5 mb-4 bg-light rounded-3">
-  <a [routerLink]="['/blogs']"><i class="fa-solid fa-arrow-left"></i></a>
+  <a [routerLink]="['/my-blogs']"><i class="fa-solid fa-arrow-left"></i></a>
   <div class="container-fluid py-5">
     <div class="row">
       <div class="col-7">
@@ -7,11 +7,9 @@
         <p class="col-md-8 fs-4">
           Share all the things you love easily with your new blog.
         </p>
-        <!-- <a class="btn btn-primary btn-lg">Go to user list</a> -->
       </div>
       <div class="col-5">
         <div class="card mb-4">
-          <!-- <div class="card-header bg-success text-white">Create a </div> -->
           <div class="card-body">
             <form [formGroup]="blogForm" (submit)="createBlog()">
               <div class="mb-3 row">

@@ -1,6 +1,5 @@
 import { Component, ElementRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import {
   FormControl,
   FormGroup,
@@ -9,9 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+
 import { Login } from '../interfaces/dto';
 import { AuthService } from '../services/auth.service';
-import { userFormRequiredValidator } from '../../common/validators';
+import { userFormRequiredValidator } from '../validators';
 
 @Component({
   selector: 'login',
@@ -22,28 +22,22 @@ import { userFormRequiredValidator } from '../../common/validators';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  #authService: AuthService = inject(AuthService);
   #formBuilder: NonNullableFormBuilder = inject(NonNullableFormBuilder);
+  #router: Router = inject(Router);
 
   username: FormControl = this.#formBuilder.control('', [Validators.required]);
-  // email: FormControl = this.#formBuilder.control('', [
-  //   Validators.required,
-  //   Validators.email,
-  // ]);
   password: FormControl = this.#formBuilder.control('', [Validators.required]);
 
   loginForm: FormGroup = this.#formBuilder.group(
     {
       username: this.username,
-      // email: this.email,
       password: this.password,
     },
     {
       validators: userFormRequiredValidator,
     }
   );
-
-  #authService: AuthService = inject(AuthService);
-  #router: Router = inject(Router);
 
   constructor(private elementRef: ElementRef) {
     this.resetForm();

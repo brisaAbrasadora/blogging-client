@@ -2,13 +2,14 @@ import { Routes } from '@angular/router';
 import { loginActivateGuard } from '../common/guards/login-activate.guard';
 import { blogsResolver } from '../common/resolvers/blogs.resolver';
 import { blogLimitActivateGuard } from '../common/guards/blog-limit.guard';
+import { ownBlogActivateGuard } from '../common/guards/own-blog.guard';
 
 export const blogsRoutes: Routes = [
   {
     path: '',
     title: 'My blogs| Blogging',
     canActivate: [loginActivateGuard],
-    resolve: { blogs: blogsResolver},
+    resolve: { blogs: blogsResolver },
     loadComponent: () =>
       import('./blogs-page/blogs-page.component').then(
         (m) => m.BlogsPageComponent
@@ -21,6 +22,15 @@ export const blogsRoutes: Routes = [
     loadComponent: () =>
       import('./create-blog/create-blog.component').then(
         (m) => m.CreateBlogComponent
+      ),
+  },
+  {
+    path: ':id/new-entry',
+    title: 'New entry for blog | Blogging',
+    canActivate: [loginActivateGuard, ownBlogActivateGuard],
+    loadComponent: () =>
+      import('./../entries/form-entry/form-entry.component').then(
+        (m) => m.FormEntryComponent
       ),
   },
 ];

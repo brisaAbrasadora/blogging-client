@@ -1,24 +1,22 @@
 import {
   Component,
   Input,
-  OnChanges,
   OnInit,
   Signal,
-  SimpleChanges,
   WritableSignal,
   computed,
   inject,
   signal,
 } from '@angular/core';
-import { BlogService } from '../services/blog.service';
-import { UsersService } from '../../users/services/users.service';
-import { Blog } from '../interfaces/entities';
-import { AuthService } from '../../auth/services/auth.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterLink } from '@angular/router';
-import { BlogListComponent } from '../blog-list/blog-list.component';
+
 import { BlogDetailsComponent } from '../blog-details/blog-details.component';
+import { BlogListComponent } from '../blog-list/blog-list.component';
+import { BlogService } from '../services/blog.service';
+import { AuthService } from '../../auth/services/auth.service';
+import { Blog } from '../interfaces/entities';
 import { BlogToUpdate } from '../../common/interfaces/blog-to-update.interface';
 
 @Component({
@@ -34,7 +32,7 @@ import { BlogToUpdate } from '../../common/interfaces/blog-to-update.interface';
   templateUrl: './blogs-page.component.html',
   styleUrl: './blogs-page.component.scss',
 })
-export class BlogsPageComponent implements OnInit, OnChanges {
+export class BlogsPageComponent implements OnInit {
   @Input() blogs!: Blog[];
 
   blogSignal: WritableSignal<Blog[]> = signal(this.blogs!);
@@ -42,33 +40,21 @@ export class BlogsPageComponent implements OnInit, OnChanges {
   blogSelectedIndex: number = -1;
 
   #blogService = inject(BlogService);
-  #userService = inject(UsersService);
   #authService: AuthService = inject(AuthService);
   currentUserId: Signal<number> = computed(() => this.#authService.id());
 
   hasTooltip: boolean[] = [];
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-  }
-
   ngOnInit(): void {
-      this.blogSignal.set(this.blogs!);
+    this.blogSignal.set(this.blogs!);
   }
 
   onBlogDeleted(id: number) {
     console.log(id);
     this.blogSignal.update((blogs) => {
-      console.log(blogs);
-      return blogs.filter((b) => {
-        console.log(b);
-        return b.id !== id;
-      });
+      return blogs.filter((b) => b.id !== id);
     });
-    this.blogs.filter((b) => {
-      console.log(b);
-      return b.id !== id;
-    });
+    this.blogs.filter((b) => b.id !== id);
   }
 
   onBlogSelected({ ...args }): void {
@@ -92,15 +78,13 @@ export class BlogsPageComponent implements OnInit, OnChanges {
     this.blogs[this.blogSelectedIndex].description = description;
   }
 
-  onTitleUpdated({id, title}: BlogToUpdate) {
+  onTitleUpdated({ id, title }: BlogToUpdate) {
     this.blogSignal.update((blogs) => {
       console.log(blogs);
       return blogs.map((b) => {
-        console.log(b);
         if (b.id === id) {
           b.title = title!;
         }
-        console.log(b);
         return b;
       });
     });

@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import {
   FormControl,
   FormGroup,
@@ -8,15 +7,16 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { UsersService } from '../../users/services/users.service';
 import { Router } from '@angular/router';
+
+import { UsersService } from '../../users/services/users.service';
 import { UserRegister } from '../../users/interfaces/user.entity';
 import {
   invalidPasswordValidator,
   invalidUsernameValidator,
-  userFormRequiredValidator,
 } from '../../common/validators';
 import { AuthService } from '../services/auth.service';
+import { userFormRequiredValidator } from '../validators';
 
 @Component({
   selector: 'user-form',
@@ -27,6 +27,12 @@ import { AuthService } from '../services/auth.service';
 })
 export class RegisterComponent implements OnInit {
   #formBuilder: NonNullableFormBuilder = inject(NonNullableFormBuilder);
+  #authService: AuthService = inject(AuthService);
+  #emails: string[] = [];
+  #router: Router = inject(Router);
+  saved: boolean = false;
+  #usernames: string[] = [];
+  #usersService: UsersService = inject(UsersService);
 
   username: FormControl = this.#formBuilder.control('', [
     Validators.required,
@@ -53,14 +59,6 @@ export class RegisterComponent implements OnInit {
       validators: userFormRequiredValidator,
     }
   );
-
-  saved: boolean = false;
-
-  #usersService: UsersService = inject(UsersService);
-  #authService: AuthService = inject(AuthService);
-  #router: Router = inject(Router);
-  #emails: string[] = [];
-  #usernames: string[] = [];
 
   constructor() {
     this.resetForm();

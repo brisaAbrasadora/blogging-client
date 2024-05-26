@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { EntriesTabComponent } from '../../tabs/entries-tab/entries-tab.component';
-import { Blog } from '../interfaces/entities';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+
+import { EntriesTabComponent } from '../../tabs/entries-tab/entries-tab.component';
 import { SettingsTabComponent } from '../../tabs/settings-tab/settings-tab.component';
+import { Blog } from '../interfaces/entities';
 import { BlogToUpdate } from '../../common/interfaces/blog-to-update.interface';
 
 @Component({

@@ -1,5 +1,5 @@
+@if (blog) {
 <div id="blogDataContainer" class="card mt-0 pt-0">
-  @if (blog) {
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <button
@@ -25,8 +25,9 @@
         role="tab"
         aria-controls="comments-tab-pane"
         aria-selected="true"
+        disabled
       >
-        Comments <span class="badge text-bg-danger">4</span>
+        Comments<!-- <span class="badge text-bg-danger">4</span> -->
       </button>
     </li>
     <li class="nav-item" role="presentation">
@@ -39,6 +40,7 @@
         role="tab"
         aria-controls="stadistics-tab-pane"
         aria-selected="false"
+        disabled
       >
         Stadistics
       </button>
@@ -67,6 +69,7 @@
         role="tab"
         aria-controls="visit-tab-pane"
         aria-selected="false"
+        disabled
       >
         Visit blog
       </button>
@@ -100,7 +103,7 @@
       aria-labelledby="entries-tab"
       tabindex="0"
     >
-      <entries-tab [entries]="blog.entries" />
+      <entries-tab [blog]="blog" [entries]="blog.entries" />
     </div>
     <div
       class="tab-pane fade show"
@@ -109,7 +112,7 @@
       aria-labelledby="comments-tab"
       tabindex="0"
     >
-      <p class="p-2">hola</p>
+      ...
     </div>
     <div
       class="tab-pane fade"
@@ -153,12 +156,5 @@
       ...
     </div>
   </div>
-  } @else {
-  <!-- <div class="center fs-1 fw-semibold fst-italic">
-    Choose one of your blogs!
-  </div>
-  <div class="center fw-semibold">
-    Or <a [routerLink]="['new']">create a new one</a> if you don't have any.
-  </div> -->
-  }
 </div>
+}

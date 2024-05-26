@@ -1,5 +1,5 @@
 export interface BlogToUpdate {
   id: number;
-  title?: string,
+  title?: string;
   description?: string;
 }
