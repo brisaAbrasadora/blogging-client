@@ -10,6 +10,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
 import { baseUrlInterceptor } from './common/interceptors/base-url.interceptor';
 import { authInterceptor } from './auth/interceptors/auth.interceptor';
+import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,5 +20,6 @@ export const appConfig: ApplicationConfig = {
       withPreloading(PreloadAllModules)
     ),
     provideHttpClient(withInterceptors([baseUrlInterceptor, authInterceptor])),
+    {provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: {dateFormat: 'medium', timezone: '+0400'}}
   ],
 };

@@ -1,0 +1,16 @@
+#blogDataContainer {
+  height: 85vh;
+}
+
+#entries-tab {
+  border-left: 0;
+  // border-top: 0;
+}
+
+.fa-xmark {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  font-size: 25px;
+  cursor: pointer;
+}

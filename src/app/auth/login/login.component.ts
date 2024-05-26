@@ -9,9 +9,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { formRequiredValidator } from '../../common/validators';
 import { Login } from '../interfaces/dto';
 import { AuthService } from '../services/auth.service';
+import { userFormRequiredValidator } from '../../common/validators';
 
 @Component({
   selector: 'login',
@@ -38,7 +38,7 @@ export class LoginComponent {
       password: this.password,
     },
     {
-      validators: formRequiredValidator,
+      validators: userFormRequiredValidator,
     }
   );
 

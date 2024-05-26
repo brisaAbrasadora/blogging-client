@@ -27,7 +27,10 @@
             >
           </li>
           <li>
-            <a href="#" class="dropdown-item disabled"
+            <a href="#" class="dropdown-item"
+            [routerLink]="['/blogs']"
+            [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{ exact: true }"
               ><i class="fa-solid fa-book"></i> My blogs</a
             >
           </li>

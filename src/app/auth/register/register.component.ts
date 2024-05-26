@@ -12,9 +12,9 @@ import { UsersService } from '../../users/services/users.service';
 import { Router } from '@angular/router';
 import { UserRegister } from '../../users/interfaces/user.entity';
 import {
-  formRequiredValidator,
   invalidPasswordValidator,
   invalidUsernameValidator,
+  userFormRequiredValidator,
 } from '../../common/validators';
 import { AuthService } from '../services/auth.service';
 
@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
       password: this.password,
     },
     {
-      validators: formRequiredValidator,
+      validators: userFormRequiredValidator,
     }
   );
 

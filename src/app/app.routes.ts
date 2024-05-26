@@ -28,6 +28,11 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./profile/profile.routes').then((m) => m.profileRoutes),
   },
+  {
+    path: 'blogs',
+    loadChildren: () =>
+      import('./blogs/blogs.routes').then((m) => m.blogsRoutes),
+  },
   { path: '', redirectTo: '/timeline', pathMatch: 'full' },
   { path: '**', redirectTo: '/timeline' },
 ];

@@ -16,15 +16,17 @@
             <th>{{ headers.title }}</th>
             <th>{{ headers.description }}</th>
             <th>{{ headers.created }}</th>
+            <th>{{ headers.updated }}</th>
           </tr>
         </thead>
         <tbody>
-          @for (blog of user.blogs; track blog.id) {
+          @for (blog of user.blogs; track blog.id; let i = $index) {
           <tr>
             <td>{{ blog.id }}</td>
             <td>{{ blog.title }}</td>
             <td>{{ blog.description || "No description" }}</td>
-            <td> {{ blog.createdAt | date:'medium':'Europe/Paris' }}</td>
+            <td> {{ blog.createdAt | date }}</td>
+            <td>{{ blog.updatedAt | date }}</td>
           </tr>
           }
         </tbody>

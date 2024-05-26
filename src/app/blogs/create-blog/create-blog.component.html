@@ -1,0 +1,97 @@
+<div class="p-5 mb-4 bg-light rounded-3">
+  <a [routerLink]="['/blogs']"><i class="fa-solid fa-arrow-left"></i></a>
+  <div class="container-fluid py-5">
+    <div class="row">
+      <div class="col-7">
+        <h1 class="display-5 fw-bold">Create a new blog</h1>
+        <p class="col-md-8 fs-4">
+          Share all the things you love easily with your new blog.
+        </p>
+        <!-- <a class="btn btn-primary btn-lg">Go to user list</a> -->
+      </div>
+      <div class="col-5">
+        <div class="card mb-4">
+          <!-- <div class="card-header bg-success text-white">Create a </div> -->
+          <div class="card-body">
+            <form [formGroup]="blogForm" (submit)="createBlog()">
+              <div class="mb-3 row">
+                <label for="title" class="col-sm-12 col-form-label"
+                  >Title</label
+                >
+                <div class="col-sm-12">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="title"
+                    placeholder="My new blog"
+                    formControlName="title"
+                    [ngClass]="validClasses(title, 'is-valid', 'is-invalid')"
+                  />
+                  @if(title.errors?.['required']) {
+                  <div class="invalid-feedback">Title cannot be empty</div>
+                  } @if(title.errors?.['minlength']) {
+                  <div class="invalid-feedback">
+                    You must enter at least
+                    {{ title.errors?.['minlength'].requiredLength - title.errors?.['minlength'].actualLength }}
+                    characters more.
+                  </div>
+                  } @if(title.errors?.['maxlength']) { Title is too long! Max
+                  length is 20 characters } @if(title.errors?.['invalidFormat'])
+                  {
+                  <div class="invalid-feedback">
+                    A blog's title can have alphanumeric characters and one
+                    space in between each character
+                  </div>
+                  } @if(title.errors?.['notUnique']) {
+                  <div class="invalid-feedback">
+                    You already have a blog with this name
+                  </div>
+                  }
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="description" class="col-sm-12 col-form-label"
+                  >Description</label
+                >
+                <div class="col-sm-12">
+                  <textarea
+                    class="form-control"
+                    name="description"
+                    placeholder="This field is optional"
+                    formControlName="description"
+                    [ngClass]="
+                      validClasses(description, 'is-valid', 'is-invalid')
+                    "
+                  ></textarea>
+                  @if(description.errors?.['maxlength']) {
+                  <div class="invalid-feedback">
+                    Description may be 70 characters long
+                  </div>
+                  }
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <div class="col-sm-12">
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    [disabled]="blogForm.invalid"
+                  >
+                    Create
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary ms-2"
+                    (click)="resetForm()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
