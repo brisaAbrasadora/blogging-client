@@ -22,6 +22,7 @@ import { invalidBlogTitleValidator } from '../../blogs/validators/invalid-blog-t
 import { CommonModule } from '@angular/common';
 import { BlogService } from '../../blogs/services/blog.service';
 import { AuthService } from '../../auth/services/auth.service';
+import { BlogToUpdate } from '../../common/interfaces/blog-to-update.interface';
 
 @Component({
   selector: 'settings-tab',
@@ -32,7 +33,9 @@ import { AuthService } from '../../auth/services/auth.service';
 })
 export class SettingsTabComponent implements OnInit, OnChanges {
   @Input({ required: true }) blog?: Blog;
-  @Output() titleUpdated = new EventEmitter<string>();
+  @Output() titleUpdated = new EventEmitter<BlogToUpdate>();
+  @Output() descriptionUpdated = new EventEmitter<string>();
+  @Output() blogDeleted = new EventEmitter<number>();
 
   #authService: AuthService = inject(AuthService);
   #blogService: BlogService = inject(BlogService);
@@ -44,17 +47,30 @@ export class SettingsTabComponent implements OnInit, OnChanges {
     Validators.maxLength(20),
     invalidBlogTitleValidator,
   ]);
+  description: FormControl = this.#formBuilder.control('', [
+    Validators.maxLength(50),
+  ]);
   #titles: string[] = [];
 
   titleForm: FormGroup = this.#formBuilder.group({
     title: this.title,
   });
+  descriptionForm: FormGroup = this.#formBuilder.group({
+    description: this.description,
+  });
 
   constructor() {
-    this.resetForms();
     this.#blogService
       .getTitles(this.currentUserId())
       .subscribe({ next: (titles) => (this.#titles = titles) });
+  }
+
+  deleteBlog(id: number): void {
+    this.#blogService.deleteBlog(id).subscribe({
+      next: () => {
+        this.blogDeleted.emit(id);
+      },
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -69,10 +85,31 @@ export class SettingsTabComponent implements OnInit, OnChanges {
         });
       }
     });
+    this.title.setValue(this.blog!.title);
   }
 
   resetForms(): void {
-    this.titleForm.reset();
+    this.title.reset();
+    this.description.reset();
+    this.title.setValue(this.blog!.title);
+    this.description.setValue(this.blog!.description);
+  }
+
+  updateDescription(fromDelete: boolean): void {
+    const update: UpdateBlog = {
+      description: fromDelete ? '' : this.description.value,
+    };
+
+    this.#blogService.updateBlog(this.blog!.id!, update).subscribe({
+      next: () => {
+        this.blog!.description = update.description!;
+        this.resetForms();
+        this.descriptionUpdated.emit(this.blog!.description);
+      },
+      error: (error) => {
+        console.log(error.error);
+      },
+    });
   }
 
   updateTitle(): void {
@@ -80,11 +117,11 @@ export class SettingsTabComponent implements OnInit, OnChanges {
       title: this.title.value,
     };
 
-    this.#blogService.updateTitle(this.blog!.id!, update).subscribe({
+    this.#blogService.updateBlog(this.blog!.id!, update).subscribe({
       next: () => {
-        this.blog!.title = this.title.value;
-        this.titleForm.reset();
-        this.titleUpdated.emit(this.blog!.title);
+        this.blog!.title = update.title!;
+        this.resetForms();
+        this.titleUpdated.emit({ id: this.blog!.id!, title: this.blog!.title });
       },
       error: (error) => {
         console.log(error.error);

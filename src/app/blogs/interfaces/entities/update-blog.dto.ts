@@ -1,3 +1,4 @@
 export interface UpdateBlog {
-  title: string;
+  title?: string;
+  description?: string;
 }

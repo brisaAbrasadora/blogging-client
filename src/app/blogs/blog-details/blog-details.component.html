@@ -127,7 +127,12 @@
       aria-labelledby="configuration-tab"
       tabindex="0"
     >
-      <settings-tab [blog]="blog" (titleUpdated)="onTitleUpdated($event)"/>
+      <settings-tab
+        [blog]="blog"
+        (titleUpdated)="onTitleUpdated($event)"
+        (descriptionUpdated)="onDescriptionUpdated($event)"
+        (blogDeleted)="onBlogDeleted($event)"
+      />
     </div>
     <div
       class="tab-pane fade"

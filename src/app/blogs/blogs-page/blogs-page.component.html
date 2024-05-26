@@ -1,10 +1,20 @@
 <div id="main" class="container pt-0">
   <div class="row">
     <div class="col-3">
-      <blog-list [blogs]="blogs" [blogIsSelected]="blogSelected()" (blogSelected)="onBlogSelected($event)" />
+      <blog-list
+        [blogs]="blogSignal()"
+        [blogIsSelected]="blogSelected()"
+        (blogSelected)="onBlogSelected($event)"
+      />
     </div>
     <div class="col-9">
-      <blog-details [blog]="blogSelected()" (closeDetails)="onCloseDetails()" (titleUpdated)="onTitleUpdated($event)" />
+      <blog-details
+        [blog]="blogSelected()"
+        (closeDetails)="onCloseDetails()"
+        (titleUpdated)="onTitleUpdated($event)"
+        (descriptionUpdated)="onDescriptionUpdated($event)"
+        (blogDeleted)="onBlogDeleted($event)"
+      />
     </div>
   </div>
 </div>

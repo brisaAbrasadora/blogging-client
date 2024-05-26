@@ -2,6 +2,7 @@ import {
   Component,
   Input,
   OnChanges,
+  OnInit,
   Signal,
   SimpleChanges,
   WritableSignal,
@@ -18,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { BlogListComponent } from '../blog-list/blog-list.component';
 import { BlogDetailsComponent } from '../blog-details/blog-details.component';
+import { BlogToUpdate } from '../../common/interfaces/blog-to-update.interface';
 
 @Component({
   selector: 'blogs-page',
@@ -32,9 +34,10 @@ import { BlogDetailsComponent } from '../blog-details/blog-details.component';
   templateUrl: './blogs-page.component.html',
   styleUrl: './blogs-page.component.scss',
 })
-export class BlogsPageComponent implements OnChanges {
+export class BlogsPageComponent implements OnInit, OnChanges {
   @Input() blogs!: Blog[];
 
+  blogSignal: WritableSignal<Blog[]> = signal(this.blogs!);
   blogSelected: WritableSignal<Blog | undefined> = signal(undefined);
   blogSelectedIndex: number = -1;
 
@@ -47,6 +50,25 @@ export class BlogsPageComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
+  }
+
+  ngOnInit(): void {
+      this.blogSignal.set(this.blogs!);
+  }
+
+  onBlogDeleted(id: number) {
+    console.log(id);
+    this.blogSignal.update((blogs) => {
+      console.log(blogs);
+      return blogs.filter((b) => {
+        console.log(b);
+        return b.id !== id;
+      });
+    });
+    this.blogs.filter((b) => {
+      console.log(b);
+      return b.id !== id;
+    });
   }
 
   onBlogSelected({ ...args }): void {
@@ -66,7 +88,21 @@ export class BlogsPageComponent implements OnChanges {
     this.blogSelected.set(undefined);
   }
 
-  onTitleUpdated(title: string) {
-    this.blogs[this.blogSelectedIndex].title = title;
+  onDescriptionUpdated(description: string) {
+    this.blogs[this.blogSelectedIndex].description = description;
+  }
+
+  onTitleUpdated({id, title}: BlogToUpdate) {
+    this.blogSignal.update((blogs) => {
+      console.log(blogs);
+      return blogs.map((b) => {
+        console.log(b);
+        if (b.id === id) {
+          b.title = title!;
+        }
+        console.log(b);
+        return b;
+      });
+    });
   }
 }

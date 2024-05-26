@@ -22,12 +22,11 @@
               {{ title.errors?.['minlength'].requiredLength - title.errors?.['minlength'].actualLength }}
               characters more.
             </div>
-            } @if(title.errors?.['maxlength']) { Title is too long! Max
-            length is 20 characters } @if(title.errors?.['invalidFormat'])
-            {
+            } @if(title.errors?.['maxlength']) { Title is too long! Max length
+            is 20 characters } @if(title.errors?.['invalidFormat']) {
             <div class="invalid-feedback">
-              A blog's title can have alphanumeric characters and one
-              space in between each character
+              A blog's title can have alphanumeric characters and one space in
+              between each character
             </div>
             } @if(title.errors?.['notUnique']) {
             <div class="invalid-feedback">
@@ -45,21 +44,57 @@
             >
               Update title
             </button>
+          </div>
+        </div>
+      </form>
+      <h4 class="fw-normal">Description</h4>
+      <form [formGroup]="descriptionForm" (submit)="updateDescription(false)">
+        <div class="mb-3 row mx-0">
+          <div class="col-sm-12">
+            <textarea
+              type="text"
+              class="form-control"
+              name="description"
+              placeholder="Update your blog's description"
+              formControlName="description"
+              [ngClass]="validClasses(description, 'is-valid', 'is-invalid')"
+            ></textarea>
+            @if(description.errors?.['maxlength']) {
+            <div class="invalid-feedback">
+              Description may be 70 characters long
+            </div>
+            }
+          </div>
+        </div>
+        <div class="mb-3 row mx-0">
+          <div class="col-sm-12">
             <button
-              type="button"
-              class="btn btn-secondary ms-2"
-              (click)="resetForms()"
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="descriptionForm.invalid"
             >
-              Reset
+              Update description
+            </button>
+            <button
+              class="btn btn-danger ms-2"
+              (click)="updateDescription(true)"
+              type="button"
+            >
+              Delete description
             </button>
           </div>
         </div>
       </form>
-      <hr>
+      <hr />
       <h3 class="fw-normal">Delete blog</h3>
-      <p>If you click this button, your blog will be deleted alongside the {{ blog!.entries.length }} entries it contains.<br>This action is definitive.</p>
-      <button class="btn btn-danger" type="button">Delete {{ blog!.title }}</button>
+      <p>
+        If you click this button, your blog will be deleted alongside the
+        {{ blog!.entries.length }} entries it contains.<br />This action is
+        definitive.
+      </p>
+      <button class="btn btn-danger" type="button" (click)="deleteBlog(blog!.id!)">
+        Delete {{ blog!.title }}
+      </button>
     </div>
-    
   </div>
 </div>

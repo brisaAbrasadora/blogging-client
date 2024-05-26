@@ -4,6 +4,7 @@ import { Blog } from '../interfaces/entities';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SettingsTabComponent } from '../../tabs/settings-tab/settings-tab.component';
+import { BlogToUpdate } from '../../common/interfaces/blog-to-update.interface';
 
 @Component({
   selector: 'blog-details',
@@ -15,11 +16,23 @@ import { SettingsTabComponent } from '../../tabs/settings-tab/settings-tab.compo
 export class BlogDetailsComponent {
   @Input() blog?: Blog;
   @Output() closeDetails = new EventEmitter<void>();
-  @Output() titleUpdated = new EventEmitter<string>();
+  @Output() titleUpdated = new EventEmitter<BlogToUpdate>();
+  @Output() descriptionUpdated = new EventEmitter<string>();
+  @Output() blogDeleted = new EventEmitter<number>();
 
-  onTitleUpdated(title: string) {
-    this.blog!.title = title;
-    this.titleUpdated.emit(title);
+  onBlogDeleted(id: number) {
+    this.closeDetails.emit();
+    this.blogDeleted.emit(id);
+  }
+
+  onDescriptionUpdated(description: string) {
+    this.blog!.description = description;
+    this.descriptionUpdated.emit(description);
+  }
+
+  onTitleUpdated({ id, title }: BlogToUpdate) {
+    this.blog!.title = title!;
+    this.titleUpdated.emit({id: id, title: title});
   }
 
   resetSelectedBlog() {

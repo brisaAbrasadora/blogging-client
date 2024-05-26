@@ -24,6 +24,10 @@ export class BlogService {
       .pipe(map(() => true));
   }
 
+  deleteBlog(id: number): Observable<void> {
+    return this.#http.delete<void>(`${this.#blogsUrl}/${id}`);
+  }
+
   getBlog(id: number): Observable<Blog> {
     return this.#http
       .get<BlogResponse>(`${this.#blogsUrl}/${id}`)
@@ -48,7 +52,7 @@ export class BlogService {
       .pipe(map((resp) => resp.blogTitles));
   }
 
-  updateTitle(id: number, update: UpdateBlog): Observable<void> {
+  updateBlog(id: number, update: UpdateBlog): Observable<void> {
     return this.#http
       .patch<void>(`${this.#blogsUrl}/${id}`, update);
   }
