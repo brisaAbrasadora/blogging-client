@@ -2,8 +2,10 @@ import {
   Component,
   Input,
   Signal,
+  WritableSignal,
   computed,
   inject,
+  signal,
 } from '@angular/core';
 import { BlogService } from '../services/blog.service';
 import { UsersService } from '../../users/services/users.service';
@@ -24,6 +26,8 @@ import { BlogDetailsComponent } from '../blog-details/blog-details.component';
 })
 export class BlogsPageComponent {
   @Input() blogs!: Blog[];
+
+  blogSelected: WritableSignal<Blog | undefined> = signal(undefined);
   
   #blogService = inject(BlogService);
   #userService = inject(UsersService);
@@ -31,4 +35,20 @@ export class BlogsPageComponent {
   currentUserId: Signal<number> = computed(() => this.#authService.id());
 
   hasTooltip: boolean[] = [];
+
+  onBlogSelected(blogId: number): void {
+    this.#blogService.getBlog(blogId).subscribe({
+      next: (blog) => {
+        console.log(blog);
+        this.blogSelected.set(blog);
+      },
+      error: (error) => {
+        console.log(error.error);
+      },
+    });
+  }
+
+  onCloseDetails(): void {
+    this.blogSelected.set(undefined);
+  }
 }

@@ -14,3 +14,10 @@
   font-size: 25px;
   cursor: pointer;
 }
+
+.center {
+  width: 50%; /* Set a width for the div */
+  margin: 0 auto; /* Set margins to 0 on both sides and auto */
+  text-align: center;
+  opacity: 50%;
+}

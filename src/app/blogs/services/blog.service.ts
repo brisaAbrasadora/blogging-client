@@ -30,14 +30,14 @@ export class BlogService {
       .pipe(map((resp) => resp.blog));
   }
 
-  getBlogs(userId?: number): Observable<Blog[]> {
+  getBlogsByUser(userId?: number): Observable<Blog[]> {
     if (userId) {
       return this.#http
-        .get<BlogsResponse>(`${this.#blogsUrl}/${userId}`)
+        .get<BlogsResponse>(`${this.#blogsUrl}/${userId}/all`)
         .pipe(map((resp) => resp.blogs));
     } else {
       return this.#http
-        .get<BlogsResponse>(`${this.#blogsUrl}/me`)
+        .get<BlogsResponse>(`${this.#blogsUrl}/me/all`)
         .pipe(map((resp) => resp.blogs));
     }
   }

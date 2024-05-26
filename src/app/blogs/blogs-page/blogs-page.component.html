@@ -1,10 +1,10 @@
 <div id="main" class="container pt-0">
   <div class="row">
     <div class="col-3">
-      <blog-list [blogs]="blogs"/>
+      <blog-list [blogs]="blogs" [blogIsSelected]="blogSelected()" (blogSelected)="onBlogSelected($event)" />
     </div>
     <div class="col-9">
-      <blog-details />
+      <blog-details [blog]="blogSelected()" (closeDetails)="onCloseDetails()" />
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Blog } from '../interfaces/entities';
@@ -13,8 +13,11 @@ import { CommonModule } from '@angular/common';
 })
 export class BlogListComponent implements OnInit {
   @Input() blogs!: Blog[];
+  @Input() blogIsSelected?: Blog;
+  @Output() blogSelected = new EventEmitter<number>;
 
   blogLimit: boolean = false;
+  activeBlog = signal<number>(-1);
 
   displayTooltip(i: number): string {
     const blogDescription: HTMLParagraphElement =
@@ -28,4 +31,10 @@ export class BlogListComponent implements OnInit {
   ngOnInit(): void {
     this.blogLimit = this.blogs.length >= 5;
 }
+
+  selectBlog(blogId: number, i: number): void {
+    console.log(`blog list component selected blog ${blogId}`);
+    this.activeBlog.set(i);
+    this.blogSelected.emit(blogId);
+  }
 }

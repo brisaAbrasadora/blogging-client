@@ -3,3 +3,7 @@ a.list-group-item > p {
   white-space: nowrap; /* Evita que el texto se ajuste a la siguiente línea */
   text-overflow: ellipsis; /* Muestra puntos suspensivos al final del texto */
 }
+
+.item-clickeable {
+  cursor: pointer
+}

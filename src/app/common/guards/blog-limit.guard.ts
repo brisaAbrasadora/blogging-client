@@ -7,7 +7,7 @@ export const blogLimitActivateGuard: CanActivateFn = (route) => {
   const blogService = inject(BlogService);
   const router = inject(Router);
 
-  return blogService.getBlogs(+route.params['id']).pipe(
+  return blogService.getBlogsByUser(+route.params['id']).pipe(
     map((resp) => {
       if (resp.length < 5) {
         return true;
