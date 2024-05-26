@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { Blog } from '../interfaces/entities';
+import { Blog, UpdateBlog } from '../interfaces/entities';
 import {
   BlogResponse,
   BlogTitlesResponse,
@@ -46,5 +46,10 @@ export class BlogService {
     return this.#http
       .get<BlogTitlesResponse>(`${this.#blogsUrl}/titles/${userId}`)
       .pipe(map((resp) => resp.blogTitles));
+  }
+
+  updateTitle(id: number, update: UpdateBlog): Observable<void> {
+    return this.#http
+      .patch<void>(`${this.#blogsUrl}/${id}`, update);
   }
 }

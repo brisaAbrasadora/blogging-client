@@ -4,7 +4,7 @@
       <blog-list [blogs]="blogs" [blogIsSelected]="blogSelected()" (blogSelected)="onBlogSelected($event)" />
     </div>
     <div class="col-9">
-      <blog-details [blog]="blogSelected()" (closeDetails)="onCloseDetails()" />
+      <blog-details [blog]="blogSelected()" (closeDetails)="onCloseDetails()" (titleUpdated)="onTitleUpdated($event)" />
     </div>
   </div>
 </div>

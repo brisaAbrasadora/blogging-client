@@ -1,7 +1,9 @@
 import {
   Component,
   Input,
+  OnChanges,
   Signal,
+  SimpleChanges,
   WritableSignal,
   computed,
   inject,
@@ -20,15 +22,22 @@ import { BlogDetailsComponent } from '../blog-details/blog-details.component';
 @Component({
   selector: 'blogs-page',
   standalone: true,
-  imports: [BlogDetailsComponent, BlogListComponent, CommonModule, NgbModule, RouterLink],
+  imports: [
+    BlogDetailsComponent,
+    BlogListComponent,
+    CommonModule,
+    NgbModule,
+    RouterLink,
+  ],
   templateUrl: './blogs-page.component.html',
   styleUrl: './blogs-page.component.scss',
 })
-export class BlogsPageComponent {
+export class BlogsPageComponent implements OnChanges {
   @Input() blogs!: Blog[];
 
   blogSelected: WritableSignal<Blog | undefined> = signal(undefined);
-  
+  blogSelectedIndex: number = -1;
+
   #blogService = inject(BlogService);
   #userService = inject(UsersService);
   #authService: AuthService = inject(AuthService);
@@ -36,11 +45,15 @@ export class BlogsPageComponent {
 
   hasTooltip: boolean[] = [];
 
-  onBlogSelected(blogId: number): void {
-    this.#blogService.getBlog(blogId).subscribe({
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+  }
+
+  onBlogSelected({ ...args }): void {
+    this.#blogService.getBlog(+args['blogId']).subscribe({
       next: (blog) => {
-        console.log(blog);
         this.blogSelected.set(blog);
+        this.blogSelectedIndex = args['i'];
       },
       error: (error) => {
         console.log(error.error);
@@ -49,6 +62,11 @@ export class BlogsPageComponent {
   }
 
   onCloseDetails(): void {
+    this.blogSelectedIndex = -1;
     this.blogSelected.set(undefined);
+  }
+
+  onTitleUpdated(title: string) {
+    this.blogs[this.blogSelectedIndex].title = title;
   }
 }

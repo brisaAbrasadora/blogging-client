@@ -1,9 +1,3 @@
-a.list-group-item > p {
-  overflow: hidden; /* Oculta el contenido que exceda el ancho máximo */
-  white-space: nowrap; /* Evita que el texto se ajuste a la siguiente línea */
-  text-overflow: ellipsis; /* Muestra puntos suspensivos al final del texto */
-}
-
 .item-clickeable {
   cursor: pointer
 }

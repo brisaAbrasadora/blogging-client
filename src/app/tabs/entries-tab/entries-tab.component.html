@@ -1,0 +1,9 @@
+@if (entries.length) {
+  <ul>
+    @for (entry of entries; track entry.id) {
+      <li>{{ entry.title }}</li>
+    }
+  </ul>
+} @else {
+  <p>No entries</p>
+}

@@ -100,7 +100,7 @@
       aria-labelledby="entries-tab"
       tabindex="0"
     >
-      <entries-tab />
+      <entries-tab [entries]="blog.entries" />
     </div>
     <div
       class="tab-pane fade show"
@@ -127,7 +127,7 @@
       aria-labelledby="configuration-tab"
       tabindex="0"
     >
-      ...
+      <settings-tab [blog]="blog" (titleUpdated)="onTitleUpdated($event)"/>
     </div>
     <div
       class="tab-pane fade"
@@ -149,12 +149,11 @@
     </div>
   </div>
   } @else {
-  <div class="center fs-1 fw-semibold fst-italic">
+  <!-- <div class="center fs-1 fw-semibold fst-italic">
     Choose one of your blogs!
   </div>
   <div class="center fw-semibold">
-    Or <a [routerLink]="['new']">create a new one</a> if you don't have
-    any.
-  </div>
+    Or <a [routerLink]="['new']">create a new one</a> if you don't have any.
+  </div> -->
   }
 </div>
